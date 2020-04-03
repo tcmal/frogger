@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 
+import { StoreContext } from '../context';
+
 import Todo from "./Todo";
 
 @observer
 class TodoList extends React.Component {
+	static contextType = StoreContext;
+
 	@observable newTodoTitle = "";
 
 	render() {
+		const { todos } = this.context;
+
 		return (
 			<div>
 				<form onSubmit={this.handleFormSubmit}>
@@ -22,11 +28,11 @@ class TodoList extends React.Component {
 				</form>
 				<hr />
 				<ul>
-					{this.props.store.todos.map(todo => (
+					{todos.todos.map(todo => (
 						<Todo todo={todo} key={todo.id} />
 					))}
 				</ul>
-				Tasks left: {this.props.store.unfinishedTodoCount}
+				Tasks left: {todos.unfinishedTodoCount}
 			</div>
 		);
 	}
@@ -38,7 +44,10 @@ class TodoList extends React.Component {
 
 	@action
 	handleFormSubmit = e => {
-		this.props.store.addTodo(this.newTodoTitle);
+		const { todos } = this.context;
+
+		todos.addTodo(this.newTodoTitle);
+
 		this.newTodoTitle = "";
 		e.preventDefault();
 	};
