@@ -1,7 +1,7 @@
 {
-  "name": "mobx-react-boilerplate",
+  "name": "frogger-front",
   "version": "1.0.0",
-  "description": "Boilerplate for MobX + React project with JSX, ES6 and decorator compilation",
+  "description": "Reddit clone. Frontend",
   "scripts": {
     "start": "webpack-dev-server --hot --open",
     "build": "webpack",
@@ -9,21 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mobxjs/mobx-react-boilerplate.git"
+    "url": "https://github.com/tcmal/frogger.git"
   },
   "keywords": [
     "react",
     "reactjs",
-    "boilerplate",
     "mobx",
-    "starter-kit"
+    "reddit",
+    "frogger"
   ],
-  "author": "Michel Weststrate <mweststrate@gmail.com> (http://github.com/mweststrate)",
+  "author": "Oscar Shrimpton <oscar.shrimpton.personal@gmail.com> (http://github.com/tcmal)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mobxjs/mobx/issues"
+    "url": "https://github.com/tcmal/frogger/issues"
   },
-  "homepage": "http://mobxjs.github.com/mobx",
+  "homepage": "http://tcmal.xyz",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
