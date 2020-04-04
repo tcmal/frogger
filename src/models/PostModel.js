@@ -24,9 +24,9 @@ export default class PostModel {
 let postId = 0;
 let last_posted_at = new Date('2010-01-01 00:00:00');
 
-export const generatePost = () => {
+export const generatePost = (overridesub=undefined) => {
 	let id = postId++;
 	last_posted_at.setHours(last_posted_at.getHours() + 1);
 	let posted = new Date(last_posted_at);
-	return new PostModel(id, "Post #" + id, false, "Lorem Ipsum...", "user" + id, "sub" + id, posted);
+	return new PostModel(id, "Post #" + id, false, "Lorem Ipsum...", "user" + id, overridesub || "sub" + id, posted);
 }

@@ -1,0 +1,49 @@
+.postPage {
+	width: 70%;
+	margin: 0 auto;
+	padding-bottom: 3rem;
+}
+
+.postPage .loading {}
+
+.postPage .post {
+	margin: 3rem 0;
+}
+.postPage .post .title {
+	color: black;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.postPage .post .content {
+	padding: 1rem;
+	border: 1px solid gray;
+	border-radius: 0.5rem;
+}
+
+.postPage .post > div > span {
+	font-size: 0.9rem;
+	display: inline-block;
+	margin: 0 1rem;
+}
+
+.postPage .comments {
+	border-top: 1px solid black;
+	padding-top: 1rem;
+}
+
+.commentContainer .comment span {
+	font-size: 0.9rem;
+	display: inline-block;
+	margin-right: 0.6rem;
+}
+
+.rootCommentsContainer {
+	position: relative;
+}
+
+.rootCommentsContainer .next {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}

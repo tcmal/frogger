@@ -1,0 +1,42 @@
+.homepage {
+	width: 90%;
+	margin: 0 auto;
+	padding-bottom: 5rem;
+}
+
+
+.homepage .error {
+	color: red;
+}
+.homepage .loading {}
+
+.postList {}
+
+.postList .btn {}
+
+.postList .post {
+	border-radius: 0.5rem 0.5rem;
+	padding: 1rem;
+	margin: 1rem;
+}
+
+.postList .post .title {
+	margin: 0;
+	font-weight: normal;
+	font-size: 2rem;
+}
+.postList .post span {
+	font-size: 0.9rem;
+	display: inline-block;
+	margin: 0 1rem;
+}
+
+
+.postList .btn {
+
+}
+
+.postList .next {
+	float: right;
+}
+.postList .prev {}

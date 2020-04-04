@@ -1,5 +1,9 @@
 @import "./forms.css";
 @import "./buttons.css";
+@import "./post_list.css";
+@import "./sub.css";
+@import "./comments.css";
+@import "./post.css";
 
 body {
 	font-family: 'Roboto', sans-serif;
