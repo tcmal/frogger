@@ -1,0 +1,44 @@
+.formPage {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.formPage h1 {
+	text-align: center;
+}
+
+.formPage form {
+	display: grid;
+	grid-row-gap: 1rem;
+	align-items: center;
+	justify-items: start;
+}
+
+.formPage form.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.formPage form label {
+	grid-column: 1 / span 2;
+	justify-self: end;
+	margin-right: 1rem;
+}
+
+.formPage form input {
+	grid-column: 3 / span 2;
+	justify-self: start;
+}
+
+.formPage form input[type=submit] {
+	grid-column: 2 / span 2;
+	justify-self: center;
+}
+
+.formPage .error {
+	padding: 1rem;
+	width: 50%;
+	margin: 1rem auto;
+	background: #ff8a80;
+	border: 1px solid #d50000;
+}

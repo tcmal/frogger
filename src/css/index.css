@@ -1,0 +1,30 @@
+@import "./forms.css";
+@import "./buttons.css";
+
+body {
+	font-family: 'Roboto', sans-serif;
+	padding: 0; margin: 0;
+}
+
+header {
+	width: 100%;
+	box-sizing: border-box;
+
+	padding-top: 3rem;
+	padding-left: 1rem;
+	padding-bottom: 1rem;
+
+	background: #8c9eff;
+	position: relative;
+}
+
+
+header .title {
+	margin: 0;
+}
+
+header .right {
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+}

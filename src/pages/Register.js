@@ -31,7 +31,7 @@ export default class RegisterPage extends React.Component {
 		return (
 			<main className="registerPage formPage">
 				<h1 className="pageTitle">Register</h1>
-				{auth.error ? <p>{auth.error}</p> : ''}
+				{auth.error ? <p className="error">{auth.error}</p> : ''}
 
 				<form onSubmit={this.handleSubmit} className={"registerForm " + (auth.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="username">Username:</label>
@@ -65,6 +65,8 @@ export default class RegisterPage extends React.Component {
 		if (password !== confirm) {
 			// TODO: Use some other way to show error?
 			this.context.auth.error = "Password and Confirm Password don't match.";
+
+			return;
 		}
 
 		this.context.auth.attemptRegister(username, password, email);

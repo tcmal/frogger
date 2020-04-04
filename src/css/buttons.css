@@ -1,0 +1,16 @@
+.btn {
+	border: 1px solid gray;
+	background: white;
+	box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+	padding: 0.5rem 3rem;
+
+	transition: box-shadow ease 0.1s;
+}
+.btn:hover {
+	box-shadow: 3px 3px 1px 0px rgba(0,0,0,0.75);
+}
+
+.btn.primary {
+	background: #3d5afe;
+	color: white;
+}
