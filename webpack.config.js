@@ -12,9 +12,7 @@ module.exports = {
 		filename: 'bundle.js',
 		publicPath: '/static/'
 	},
-	plugins: [
-		new webpack.HotModuleReplacementPlugin()
-	],
+	plugins: [],
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
@@ -30,7 +28,6 @@ module.exports = {
 		}]
 	},
 	devServer: {
-		historyApiFallback: true,
-		hot: true
+		historyApiFallback: true
 	}
 };
