@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
+import { PaginationWrapper } from './Utils';
 import { friendlyTimeSince } from '../util';
 
 export const PostComment = ({ comment }) => (
@@ -25,13 +27,10 @@ export const PostComment = ({ comment }) => (
 	</div>
 );
 
-export default ({ comments, onNextPage, onPrevPage, hasPrev }) => (
-	<div className="rootCommentsContainer">
-		{comments.map(x => 
+export default observer(({ comments }) => (
+	<PaginationWrapper pagable={comments} className="rootCommentsContainer">
+		{comments.currentPage.map(x => 
 			<PostComment key={x.id} comment={x} />
 		)}
-		
-		{hasPrev ? <button onClick={onPrevPage} className="btn prev">Previous</button> : ''}
-		<button onClick={onNextPage} className="btn next">Next</button>
-	</div>
-);
+	</PaginationWrapper>
+));

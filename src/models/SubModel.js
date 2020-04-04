@@ -1,3 +1,5 @@
+//! Data for a sub
+
 import { observable } from "mobx";
 
 export default class SubModel {

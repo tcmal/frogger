@@ -3,6 +3,8 @@ import { observer } from 'mobx-react';
 import { friendlyTimeSince } from '../util';
 import { Link } from 'react-router-dom';
 
+import { PaginationWrapper } from './Utils';
+
 export const PostListItem = ({ item }) => (
 	<div className="post">
 		<Link to={"/p/" + item.id} className="supressLinkStyling">
@@ -22,13 +24,10 @@ export const PostListItem = ({ item }) => (
 	</div>
 );
 
-export default observer(({ onNextPage, onPrevPage, contents, hasPrev }) => (
-	<section className="postList">
-		{contents.map(x => 
+export default observer(({ postList }) => (
+	<PaginationWrapper pagable={postList} className="postList">
+		{postList.currentPage.map(x => 
 			<PostListItem key={x.id} item={x} />
 		)}
-
-		{hasPrev ? <button onClick={onPrevPage} className="btn prev">Previous</button> : ''}
-		<button onClick={onNextPage} className="btn next">Next</button>
-	</section>
+	</PaginationWrapper>
 ));

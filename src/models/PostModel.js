@@ -1,5 +1,9 @@
+//! Data for a post
 import { observable } from "mobx";
 
+// TODO: When we implement the server, we probably won't get content, etc. till in the detail view
+
+/// Used in post lists and in PostDetail.post
 export default class PostModel {
 	id = 0
 	title = "";
@@ -24,6 +28,8 @@ export default class PostModel {
 let postId = 0;
 let last_posted_at = new Date('2010-01-01 00:00:00');
 
+/// Generate a new post, using `overridesub` as the sub if specified
+/// This always gives a post posted after the previous generation
 export const generatePost = (overridesub=undefined) => {
 	let id = postId++;
 	last_posted_at.setHours(last_posted_at.getHours() + 1);

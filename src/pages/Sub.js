@@ -5,6 +5,9 @@ import { useParams, Link } from 'react-router-dom';
 
 import { useStore } from '../context';
 import PostList from '../components/PostList';
+import SubSidebar from '../components/SubSidebar';
+
+import { PaginationWrapper, LoadableWrapper } from '../components/Utils';
 
 export default observer(({ forceAll }) => {
 
@@ -12,28 +15,18 @@ export default observer(({ forceAll }) => {
 	const { name } = useParams();
 
 	// Make sure we load the right sub
-	if (!sub.loadedSub || sub.loadedSub.name != name)
-		sub.setLoadedSub(name);
+	sub.setLoadedSub(name);
 
 	return (
-		<div className="subPage">
-			<section className="content">
-				{sub.requestInProgress ? <p className="loading">Loading...</p>
-					: ''}
-				{sub.error ? <p className="error">{sub.error}</p>
-					: ''}
-
-				<PostList contents={sub.currentPage}
-					hasPrev={sub.hasPrev}
-					onNextPage={sub.loadNextPage}
-					onPrevPage={sub.loadPrevPage} />
-			</section>
-			<aside className="sidebar">
-				<h2>{sub.loadedSub.name}</h2>
-				<span className="owner">Owned by <Link to={"/u/" + sub.loadedSub.owner_name}>/u/{sub.loadedSub.owner_name}</Link></span>
-
-				<p>{sub.loadedSub.description}</p>
-			</aside>
-		</div>
+		<LoadableWrapper loadable={sub}>
+			<div className="subPage">
+				<section className="content">
+					<PostList postList={sub.posts} />
+				</section>
+				<aside className="sidebar">
+					<SubSidebar sub={sub.sub} />
+				</aside>
+			</div>
+		</LoadableWrapper>
 	)
 });

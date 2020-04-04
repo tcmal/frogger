@@ -13,19 +13,11 @@ export default observer(({ forceAll }) => {
 	// Otherwise, show user home if we can
 	const content = !forceAll && store.auth.isLoggedIn ? store.home : store.all;
 
-	if (content.posts.length == 0)
-		content.loadNextPage();
+	content.ensureNotEmpty();
+
 	return (
 		<div className="homePage">
-			{content.requestInProgress ? <p className="loading">Loading...</p>
-				: ''}
-			{content.error ? <p className="error">{content.error}</p>
-				: ''}
-
-			<PostList contents={content.currentPage}
-				hasPrev={content.hasPrev}
-				onNextPage={content.loadNextPage}
-				onPrevPage={content.loadPrevPage} />
+			<PostList postList={content} />
 		</div>
 	)
 });

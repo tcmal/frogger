@@ -1,32 +1,12 @@
+//! Stores authentication state
+
 import { observable, computed, action } from "mobx";
 
-import PostModel, { generatePost } from "./PostModel";
+import LoadableMixin from "./LoadableMixin";
 
-// A user that we're logged in as
-// This doesn't contain karma/user content
-export class AuthedUser {
-	username = ""
-	email = ""
-
-	// Not needed yet
-	// token = ""
-
-	constructor(username, email="") {
-		this.username = username
-		this.email = email
-	}
-}
-
-export default class AuthenticationModel {
+export default class AuthenticationModel extends LoadableMixin {
 	@observable
 	loggedInUser = null;
-
-	// Used for login and register page
-	@observable
-	requestInProgress = false;
-
-	@observable
-	error = "";
 
 	@computed get isLoggedIn() {
 		return this.loggedInUser !== null;
@@ -52,10 +32,12 @@ export default class AuthenticationModel {
 		}), 3000);
 	}
 
-	@action attemptRegister(username, password, email) {
+	@action
+	attemptRegister(username, password, email) {
 		// TODO: Proper register logic
 
 		this.requestInProgress = true;
+		this.error = "";
 
 		// Wrapping in action ensures things are recalculated afterwards
 		setTimeout(action(() => {
@@ -71,5 +53,20 @@ export default class AuthenticationModel {
 
 	@action doLogout() {
 		this.loggedInUser = null;
+	}
+}
+
+// A user that we're logged in as
+// This doesn't contain karma/user content
+export class AuthedUser {
+	username = ""
+	email = ""
+
+	// Not needed yet
+	// token = ""
+
+	constructor(username, email="") {
+		this.username = username
+		this.email = email
 	}
 }

@@ -4,7 +4,7 @@ import React from 'react';
 
 import HomePageModel from './models/HomePageModel';
 import AuthenticationModel from './models/AuthenticationModel';
-import SubPostsModel from './models/SubPostsModel';
+import SubPageModel from './models/SubPageModel';
 import PostDetailModel from './models/PostDetailModel';
 
 /// Initial state for app
@@ -12,7 +12,7 @@ export const createStore = () => ({
 	home: new HomePageModel(),
 	all: new HomePageModel(), // TODO
 	auth: new AuthenticationModel(),
-	sub: new SubPostsModel(),
+	sub: new SubPageModel(),
 	post: new PostDetailModel()
 });
 
