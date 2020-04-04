@@ -1,10 +1,10 @@
 //! Data for a post
-import { observable } from "mobx";
+import VotableMixin from "./VotableMixin";
 
 // TODO: When we implement the server, we probably won't get content, etc. till in the detail view
 
 /// Used in post lists and in PostDetail.post
-export default class PostModel {
+export default class PostModel extends VotableMixin {
 	id = 0
 	title = "";
 	is_link = false;
@@ -13,7 +13,9 @@ export default class PostModel {
 	posted_to = "";
 	created_at = new Date();
 
-	constructor(id, title, is_link, content, poster_name, posted_to, created_at) {
+	constructor(id, title, is_link, content, poster_name, posted_to, created_at, votesExclUser=Math.floor(Math.random() * 100)) {
+		super();
+		
 		this.id = id;
 		this.title = title;
 		this.is_link = is_link;
@@ -21,6 +23,7 @@ export default class PostModel {
 		this.poster_name = poster_name;
 		this.posted_to = posted_to;
 		this.created_at = created_at;
+		this.votesExclUser = votesExclUser;
 	}
 }
 

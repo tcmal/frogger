@@ -1,19 +1,23 @@
 //! Represents a comment on a post
 
+import VotableMixin from "./VotableMixin";
 import { observable } from "mobx";
 
-export default class CommentModel {
+export default class CommentModel extends VotableMixin {
 	id = 0
 	content = ""
 	poster_name = ""
 	created_at = new Date()
 	children = []
 
-	constructor(id, content, poster_name, created_at) {
+	constructor(id, content, poster_name, created_at, votesExclUser=Math.floor(Math.random() * 100)) {
+		super();
+
 		this.id = id;
 		this.content = content
 		this.poster_name = poster_name
 		this.created_at = created_at
+		this.votesExclUser = votesExclUser;
 	}
 }
 

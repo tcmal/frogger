@@ -1,20 +1,20 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-export const LoadableWrapper = observer(({ loadable, children }) => {
+export const LoadableWrapper = observer(({ loadable, children, className }) => {
 	if (loadable.requestInProgress) {
 		return <p className="loading">Loading...</p>;
 	} else if (loadable.error) {
 		return <p className="error">{loadable.error}</p>
 	} else {
-		return <div>{children}</div>;
+		return <div className={className}>{children}</div>;
 	}
 });
 
-export const PaginationWrapper = observer(({ pagable, children }) => (
+export const PaginationWrapper = observer(({ pagable, children, className="" }) => (
 	<section className="paginationWrapper">
 		
-		<LoadableWrapper loadable={pagable}>
+		<LoadableWrapper loadable={pagable} className={className}>
 			{children}
 		</LoadableWrapper>
 

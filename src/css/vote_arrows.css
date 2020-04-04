@@ -1,0 +1,29 @@
+.voteArrows {
+	display: flex;
+	flex-direction: column;
+
+	justify-content: flex-start;
+	align-items: center;
+
+	padding: 0 2rem;
+}
+
+
+.voteArrows .up, .voteArrows .down {
+	background: none;
+	border-radius: 50% 50%;
+	padding: 0.3rem;
+}
+.voteArrows .number {
+	text-align: center;
+}
+
+.voteArrows .up.active {
+	background: orange;
+	color: white;
+}
+
+.voteArrows .down.active {
+	background: blue;
+	color: white;
+}

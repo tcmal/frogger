@@ -5,22 +5,27 @@ import { Link } from 'react-router-dom';
 
 import { PaginationWrapper } from './Utils';
 
+import VoteArrows from './VoteArrows';
+
 export const PostListItem = ({ item }) => (
 	<div className="post">
-		<Link to={"/p/" + item.id} className="supressLinkStyling">
-			<h3 className="title">{item.title}</h3>
-		</Link>
-		<span className="time">{friendlyTimeSince(item.created_at)}</span>
-		<span className="poster">
-			<Link to={"/u/" + item.poster_name}>
-				/u/{item.poster_name}
+		<VoteArrows className="voting" votable={item} />
+		<div className="listing">
+			<Link to={"/p/" + item.id} className="supressLinkStyling">
+				<h3 className="title">{item.title}</h3>
 			</Link>
-		</span>
-		<span className="sub">
-			<Link to={"/f/" + item.posted_to}>
-				/f/{item.posted_to}
-			</Link>
-		</span>
+			<span className="time">{friendlyTimeSince(item.created_at)}</span>
+			<span className="poster">
+				<Link to={"/u/" + item.poster_name}>
+					/u/{item.poster_name}
+				</Link>
+			</span>
+			<span className="sub">
+				<Link to={"/f/" + item.posted_to}>
+					/f/{item.posted_to}
+				</Link>
+			</span>
+		</div>
 	</div>
 );
 
