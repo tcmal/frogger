@@ -13,9 +13,11 @@ export const mainSwitch = (
 		<Route path="/register">
 			<Register />
 		</Route>
-
 		<Route path="/login">
 			<Login />
+		</Route>
+		<Route path="/all">
+			<Home forceAll={true} />
 		</Route>
 		<Route path="/">
 			<Home />

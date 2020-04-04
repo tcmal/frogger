@@ -7,7 +7,8 @@ import AuthenticationModel from './models/AuthenticationModel';
 
 /// Initial state for app
 export const createStore = () => ({
-	homePage: new HomePageModel(),
+	home: new HomePageModel(),
+	all: new HomePageModel(), // TODO
 	auth: new AuthenticationModel()
 });
 
