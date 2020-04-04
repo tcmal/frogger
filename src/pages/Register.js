@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { StoreContext } from '../context';
 
 @observer
-export default class LoginPage extends React.Component {
+export default class RegisterPage extends React.Component {
 	static contextType = StoreContext;
 
 	constructor(props) {
@@ -14,7 +14,9 @@ export default class LoginPage extends React.Component {
 		// Setup initial state
 		this.state = {
 			username: "",
-			password: ""
+			email: "",
+			password: "",
+			confirm: ""
 		};
 	}
 
@@ -27,16 +29,22 @@ export default class LoginPage extends React.Component {
 		}
 
 		return (
-			<main className="loginPage formPage">
-				<h1 className="pageTitle">Login</h1>
+			<main className="registerPage formPage">
+				<h1 className="pageTitle">Register</h1>
 				{auth.error ? <p>{auth.error}</p> : ''}
 
-				<form onSubmit={this.handleSubmit} className={"loginForm" + (auth.requestInProgress ? 'disabled' : '')}>
+				<form onSubmit={this.handleSubmit} className={"registerForm " + (auth.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="username">Username:</label>
 					<input name="username" required type="text" value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
 
+					<label htmlFor="email">Email:</label>
+					<input name="email" type="email" value={this.state.email} onChange={this.updateValue.bind(this, "email")} />
+
 					<label htmlFor="password">Password:</label>
 					<input name="password" required type="password" value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
+
+					<label htmlFor="confirm">Confirm Password:</label>
+					<input name="confirm" required type="password" value={this.state.confirm} onChange={this.updateValue.bind(this, "confirm")} />
 
 					<input type="submit" value="Login" />
 				</form>
@@ -53,8 +61,13 @@ export default class LoginPage extends React.Component {
 		e.preventDefault();
 
 		// Dispatch the action
-		const { username, password } = this.state;
-		this.context.auth.attemptLogin(username, password);
+		const { username, password, confirm, email } = this.state;
+		if (password !== confirm) {
+			// TODO: Use some other way to show error?
+			this.context.auth.error = "Password and Confirm Password don't match.";
+		}
+
+		this.context.auth.attemptRegister(username, password, email);
 	}
 
 	// Helper to update form values

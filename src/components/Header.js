@@ -11,12 +11,20 @@ export default observer(() => {
 			<h1 className="title">frogger</h1>
 
 			<div className="right">
-					<span className="username">
 					{auth.isLoggedIn ?
-						<Link to={"/u/" + auth.loggedInUser.username}>{auth.loggedInUser.username}</Link>
-						: <Link to="/login">Login</Link>}
-					</span>
+						<span className="userLinks">
+							<Link to={"/u/" + auth.loggedInUser.username}>{auth.loggedInUser.username}</Link>
+							<a onClick={(e) => {
+								e.preventDefault();
+								auth.doLogout()
+							}} href="#">Logout</Link>
+						</span>
+						: <span className="userLinks">
+							<Link to="/login">Login</Link> |
+							<Link to="/register">Register</Link>
+						</span>}
+					</div>
 			</div>
 		</header>
-	)
+	);
 });

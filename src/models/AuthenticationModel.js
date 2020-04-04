@@ -21,12 +21,12 @@ export default class AuthenticationModel {
 	@observable
 	loggedInUser = null;
 
-	// Used for login page
+	// Used for login and register page
 	@observable
-	loginInProgress = false;
+	requestInProgress = false;
 
 	@observable
-	authenticationError = "";
+	error = "";
 
 	@computed get isLoggedIn() {
 		return this.loggedInUser !== null;
@@ -37,17 +37,39 @@ export default class AuthenticationModel {
 		// TODO: Proper authentication logic
 		// For now just a static delay to show things
 
-		this.loginInProgress = true;
+		this.requestInProgress = true;
+		this.error = "";
 
 		// Wrapping in action ensures things are recalculated afterwards
 		setTimeout(action(() => {
 			if (username == "admin" && password == "admin") {
 				this.loggedInUser = new AuthedUser(username, "asdf@asdf.com");
 			} else {
-				this.authenticationError = "Invalid username/password";
+				this.error = "Invalid username/password";
 			}
 
-			this.loginInProgress = false;
+			this.requestInProgress = false;
 		}), 3000);
+	}
+
+	@action attemptRegister(username, password, email) {
+		// TODO: Proper register logic
+
+		this.requestInProgress = true;
+
+		// Wrapping in action ensures things are recalculated afterwards
+		setTimeout(action(() => {
+			if (username == "admin") {
+				this.error = "Username is taken";
+			} else {
+				this.loggedInUser = new AuthedUser(username, email);
+			}
+
+			this.requestInProgress = false;
+		}), 3000);
+	}
+
+	@action doLogout() {
+		this.loggedInUser = null;
 	}
 }
