@@ -2,11 +2,13 @@
 
 import React from 'react';
 
-import TodoListModel from './models/TodoListModel';
+import HomePageModel from './models/HomePageModel';
+import AuthenticationModel from './models/AuthenticationModel';
 
 /// Initial state for app
 export const createStore = () => ({
-	todos: new TodoListModel()
+	homePage: new HomePageModel(),
+	auth: new AuthenticationModel()
 });
 
 /// The React context and provider
