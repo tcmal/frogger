@@ -8,12 +8,12 @@ export default observer(() => {
 
 	return (
 		<header>
-			<h1 className="title">frogger</h1>
+			<Link to="/"><h1 className="title">frogger</h1></Link>
 
 			<div className="right">
 				{auth.isLoggedIn ?
 					<span className="userLinks">
-						<Link to={"/u/" + auth.loggedInUser.username}>{auth.loggedInUser.username}</Link>
+						<Link to={"/u/" + auth.loggedInUser.username}>{auth.loggedInUser.username}</Link> | 
 						<a onClick={(e) => {
 							e.preventDefault();
 							auth.doLogout()
