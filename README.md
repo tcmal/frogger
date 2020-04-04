@@ -1,6 +1,11 @@
 # frogger-front
 
-A reddit clone. Frontend
+A reddit clone. Frontend.
+
+I'm writing some articles on this. Read them, if you want.
+
+1. [Introduction](https://dev.to/tcmal/reddit-in-7-days-1-1o4p)
+2. [You don't need a pagination module](https://dev.to/tcmal/you-don-t-need-a-pagination-package-ri7d-2-4glo)
 
 # Run
 
