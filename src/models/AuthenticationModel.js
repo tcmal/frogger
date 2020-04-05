@@ -3,6 +3,7 @@
 import { observable, computed, action } from "mobx";
 
 import LoadableMixin from "./LoadableMixin";
+import SubscriptionListModel from "./SubscriptionListModel";
 
 export default class AuthenticationModel extends LoadableMixin {
 	@observable
@@ -54,6 +55,10 @@ export default class AuthenticationModel extends LoadableMixin {
 	@action doLogout() {
 		this.loggedInUser = null;
 	}
+
+	@action unsubscribeFrom = (name) => {
+		this.loggedInUser.subscriptions.items = this.loggedInUser.subscriptions.items.filter(x => x.name != name);
+	}
 }
 
 // A user that we're logged in as
@@ -62,11 +67,15 @@ export class AuthedUser {
 	username = ""
 	email = ""
 
+	@observable
+	subscriptions = null
+
 	// Not needed yet
 	// token = ""
 
 	constructor(username, email="") {
 		this.username = username
 		this.email = email
+		this.subscriptions = new SubscriptionListModel();
 	}
 }

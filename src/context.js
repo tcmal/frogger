@@ -5,7 +5,9 @@ import React from 'react';
 import HomePageModel from './models/HomePageModel';
 import AuthenticationModel from './models/AuthenticationModel';
 import SubPageModel from './models/SubPageModel';
+import SubModModel from './models/SubModModel';
 import PostDetailModel from './models/PostDetailModel';
+import PosterModel from './models/PosterModel';
 
 /// Initial state for app
 export const createStore = () => ({
@@ -13,7 +15,9 @@ export const createStore = () => ({
 	all: new HomePageModel(), // TODO
 	auth: new AuthenticationModel(),
 	sub: new SubPageModel(),
-	post: new PostDetailModel()
+	subMod: new SubModModel(),
+	post: new PostDetailModel(),
+	poster: new PosterModel()
 });
 
 /// The React context and provider

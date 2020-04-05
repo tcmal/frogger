@@ -59,7 +59,6 @@ export class PostCommentsModel extends PaginationMixin {
 				for (let i = 0; i < this.pageSize; i++) {
 					comments.push(generateComment());
 				}
-				console.log(comments);
 				resolve(comments);
 			}
 		}, 300);

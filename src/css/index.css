@@ -5,6 +5,7 @@
 @import "./comments.css";
 @import "./post.css";
 @import "./vote_arrows.css";
+@import "./sub_list.css";
 
 body {
 	font-family: 'Roboto', sans-serif;

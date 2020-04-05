@@ -1,0 +1,30 @@
+.subList {
+	display: flex;
+	flex-direction: column;
+
+	border: 1px solid black;
+	border-bottom: none;
+	margin-bottom: 1rem;
+}
+
+.subList .subListItem {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: flex-start;
+
+	padding: 0.1rem;
+
+	border-bottom: 1px solid black;
+}
+
+.subListItem .remove {
+	padding: 0.3rem;
+	height: auto;
+	background: red;
+	color: white;
+	border-radius: 0.6rem;
+	margin: 0 2rem;
+
+	align-self: center;
+}

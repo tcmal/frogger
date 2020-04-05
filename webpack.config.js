@@ -28,6 +28,7 @@ module.exports = {
 		}]
 	},
 	devServer: {
-		historyApiFallback: true
+		historyApiFallback: true,
+		hot: true
 	}
 };

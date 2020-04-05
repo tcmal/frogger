@@ -6,7 +6,7 @@ import VoteArrows from './VoteArrows';
 import { PaginationWrapper } from './Utils';
 import { friendlyTimeSince } from '../util';
 
-export const PostComment = ({ comment }) => (
+export const PostComment = ({ comment, showModActions, onDelete }) => (
 	<div className="commentContainer">
 		<div className="comment">
 			<VoteArrows votable={comment} />
@@ -18,6 +18,12 @@ export const PostComment = ({ comment }) => (
 				</span>
 				<span className="time">{friendlyTimeSince(comment.created_at)}</span>
 
+				{showModActions ? 
+					<span className="delete" onClick={() => onDelete(comment)}>
+						Delete
+					</span>
+					: ''}
+
 				<p className="content">
 					{comment.content}
 				</p>
@@ -25,16 +31,16 @@ export const PostComment = ({ comment }) => (
 		</div>
 		<div className="children">
 			{comment.children.map(x =>
-				<PostComment key={x.id} comment={x} />
+				<PostComment key={x.id} comment={x} showModActions={showModActions} onDelete={onDelete} />
 			)}
 		</div>
 	</div>
 );
 
-export default observer(({ comments }) => (
+export default observer(({ comments, showModActions, onDelete }) => (
 	<PaginationWrapper pagable={comments} className="rootCommentsContainer">
 		{comments.currentPage.map(x => 
-			<PostComment key={x.id} comment={x} />
+			<PostComment key={x.id} comment={x} showModActions={showModActions} onDelete={onDelete} />
 		)}
 	</PaginationWrapper>
 ));

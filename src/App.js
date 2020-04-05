@@ -1,15 +1,17 @@
-import { hot } from 'react-hot-loader/root';
+import { hot } from 'react-hot-loader';
 import React from 'react';
 
-import { StoreProvider, createStore } from './context';
+import "./css/index.css";
+
+import { StoreProvider } from './context';
 import { mainSwitch } from './pages';
 import Header from './components/Header';
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 
-const App = () => (
+const App = ({ store }) => (
 	<div>
-		<StoreProvider value={createStore()}>
+		<StoreProvider value={store}>
 			<Router>
 				<Header />
 				
@@ -19,4 +21,4 @@ const App = () => (
 	</div>
 );
 
-export default hot(App);
+export default hot(module)(App);

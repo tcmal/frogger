@@ -27,7 +27,6 @@ export default class PaginationMixin extends LoadableMixin {
 		// If we have after, Find where it points at
 		// Otherwise, 0
 		let start = this.after !== undefined ? this.items.findIndex(x => x[this.sorted_by] > this.after) : 0;
-
 		return this.items.slice(start, start + this.pageSize);
 	}
 

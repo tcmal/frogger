@@ -7,35 +7,39 @@
 	text-align: center;
 }
 
-.formPage form {
+.formContainer form {
 	display: grid;
 	grid-row-gap: 1rem;
 	align-items: center;
 	justify-items: start;
 }
 
-.formPage form.disabled {
+.formContainer form.disabled {
 	opacity: 0.5;
 	pointer-events: none;
 }
 
-.formPage form label {
+.formContainer form label {
 	grid-column: 1 / span 2;
 	justify-self: end;
 	margin-right: 1rem;
 }
 
-.formPage form input {
+.formContainer form input, .formContainer form textarea {
 	grid-column: 3 / span 2;
 	justify-self: start;
 }
 
-.formPage form input[type=submit] {
+.formContainer form textarea {
+	resize: none;
+}
+
+.formContainer form input[type=submit] {
 	grid-column: 2 / span 2;
 	justify-self: center;
 }
 
-.formPage .error {
+.formContainer .error {
 	padding: 1rem;
 	width: 50%;
 	margin: 1rem auto;

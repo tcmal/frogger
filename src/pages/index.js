@@ -7,6 +7,8 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Sub from './Sub';
+import CreateSub from './CreateSub';
+import CreatePost from './CreatePost';
 import Post from './Post';
 
 /// The main 'Switch' that handles which page is showing
@@ -14,6 +16,12 @@ export const mainSwitch = (
 	<Switch>
 		<Route path="/f/:name">
 			<Sub />
+		</Route>
+		<Route path="/create/f">
+			<CreateSub />
+		</Route>
+		<Route path="/create/p">
+			<CreatePost />
 		</Route>
 		<Route path="/p/:id">
 			<Post />

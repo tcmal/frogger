@@ -29,7 +29,7 @@ export default class RegisterPage extends React.Component {
 		}
 
 		return (
-			<main className="registerPage formPage">
+			<main className="registerPage formPage formContainer">
 				<h1 className="pageTitle">Register</h1>
 				{auth.error ? <p className="error">{auth.error}</p> : ''}
 

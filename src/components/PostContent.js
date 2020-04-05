@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { friendlyTimeSince } from '../util';
 import VoteArrows from "./VoteArrows";
 
-export default ({ post }) => (
+export default ({ post, showModActions, onDelete }) => (
 	<div className="postDetailContainer">
 		<VoteArrows votable={post} />
 		<div className="postDetail">
@@ -25,6 +25,12 @@ export default ({ post }) => (
 					/f/{post.posted_to}
 				</Link>
 			</span>
+
+			{showModActions ? 
+				<span className="delete" onClick={() => onDelete(post)}>
+					Delete
+				</span>
+				: ''}
 		</div>
 	</div>
 );

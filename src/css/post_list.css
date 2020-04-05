@@ -2,6 +2,15 @@
 	width: 90%;
 	margin: 0 auto;
 	padding-bottom: 5rem;
+	display: flex;
+}
+
+.homepage > .content {
+	flex-grow: 3;
+}
+
+.homepage > .sidebar {
+	flex-grow: 1;
 }
 
 
