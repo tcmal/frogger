@@ -1,3 +1,14 @@
+export const SERVER_BASE_URL = "http://localhost:3000/";
+
+export const post_request = (url, data) => fetch(SERVER_BASE_URL + url, {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+		'Authorization': window.token ? 'Bearer ' + window.token : 'None',
+	},
+	body: JSON.stringify(data)
+})
+
 export const friendlyTimeSince = (past) => {
 	const now = new Date();
 
