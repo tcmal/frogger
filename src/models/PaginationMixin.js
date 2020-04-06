@@ -82,6 +82,23 @@ export default class PaginationMixin extends LoadableMixin {
 		}
 	}
 
+	@action
+	clear = () => {
+		this.items = [];
+		this.after = undefined;
+		this.loadNextPage();
+	}
+
+	@action
+	setInitialItems = (items) => {
+		this.items = items;
+		this.after = undefined;
+		
+		if (this.items.length == 0) {
+			this.error = "No more items!";
+		}
+	}
+
 	doLoadAfter = (after) => {
 		// This should be implemented by the mixin target
 		// It should return a promise

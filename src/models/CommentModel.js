@@ -2,6 +2,7 @@
 
 import VotableMixin from "./VotableMixin";
 import { observable } from "mobx";
+import UserVote from "./UserVote";
 
 export default class CommentModel extends VotableMixin {
 	id = 0
@@ -10,14 +11,17 @@ export default class CommentModel extends VotableMixin {
 	created_at = new Date()
 	children = []
 
-	constructor(id, content, poster_name, created_at, votesExclUser=Math.floor(Math.random() * 100)) {
+	constructor({commentId, content, userName, createdAt, replies=[], votesExclUser=0, userVote=new UserVote()}) {
 		super();
 
-		this.id = id;
-		this.content = content
-		this.poster_name = poster_name
-		this.created_at = created_at
+		this.id = commentId;
+		this.content = content;
+		this.poster_name = userName;
+		this.created_at = new Date(createdAt);
 		this.votesExclUser = votesExclUser;
+		this.userVote = userVote;
+
+		this.children = replies.map(x => new CommentModel(x));
 	}
 }
 

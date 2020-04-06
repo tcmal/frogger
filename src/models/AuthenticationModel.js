@@ -2,7 +2,7 @@
 
 import { observable, computed, action } from "mobx";
 
-import { post_request } from "../util";
+import { post_request, json_request } from "../util";
 
 import LoadableMixin from "./LoadableMixin";
 import SubscriptionListModel from "./SubscriptionListModel";
@@ -20,9 +20,8 @@ export default class AuthenticationModel extends LoadableMixin {
 					name: prevAuth.username,
 					email: prevAuth.email
 				};
-				const token = prevAuth.token;
 
-				this.loggedInUser = new AuthedUser(token, user);
+				this.loggedInUser = new AuthedUser(prevAuth.token, new Date(prevAuth.expires), user);
 			} catch (_) {
 				localStorage.removeItem('authedUser');
 			}
@@ -35,9 +34,6 @@ export default class AuthenticationModel extends LoadableMixin {
 
 	@action
 	attemptLogin(username, password) {
-		// TODO: Proper authentication logic
-		// For now just a static delay to show things
-
 		this.requestInProgress = true;
 		this.error = "";
 	
@@ -45,12 +41,11 @@ export default class AuthenticationModel extends LoadableMixin {
 			username, password
 		}).then(x => x.json())
 		.then(action(resp => {
-			console.log(resp);
 			this.requestInProgress = false;
 			if (resp.error) {
 				this.error = resp.error.message;
 			} else {
-				this.loggedInUser = new AuthedUser(resp.token, resp.user);
+				this.loggedInUser = new AuthedUser(resp.token, new Date(resp.expires), resp.user);
 				localStorage.setItem('authedUser', JSON.stringify(this.loggedInUser));
 			}
 		}))
@@ -58,29 +53,43 @@ export default class AuthenticationModel extends LoadableMixin {
 
 	@action
 	attemptRegister(username, password, email) {
-		// TODO: Proper register logic
-
 		this.requestInProgress = true;
 		this.error = "";
 
-		// Wrapping in action ensures things are recalculated afterwards
-		setTimeout(action(() => {
-			if (username == "admin") {
-				this.error = "Username is taken";
-			} else {
-				this.loggedInUser = new AuthedUser(username, email);
-			}
-
+		post_request("/users", {
+			name: username,
+			password, email
+		}).then(x => x.json())
+		.then(action(resp => {
 			this.requestInProgress = false;
-		}), 3000);
+			if (resp.error) {
+				this.error = resp.error.message;
+			} else {
+				this.attemptLogin(username, password);
+			}
+		}));
 	}
 
 	@action doLogout() {
 		this.loggedInUser = null;
+		localStorage.removeItem('authedUser');
 	}
 
 	@action unsubscribeFrom = (name) => {
 		this.loggedInUser.subscriptions.items = this.loggedInUser.subscriptions.items.filter(x => x.name != name);
+
+		this.requestInProgress = true;
+		this.error = "";
+		json_request("DELETE", "/sub/" + name + "/unsubscribe")
+			.then(x => x.json())
+			.then(action(resp => {
+				console.log(resp);
+				// TODO: Find somewhere to display this error, probably a toast
+				this.requestInProgress = false;
+				if (resp.error) {
+					this.error = resp.error;
+				}
+			}));
 	}
 }
 
@@ -94,13 +103,15 @@ export class AuthedUser {
 	subscriptions = null
 
 	token = ""
+	expires = ""
 
-	constructor(token, { name, email="" }) {
+	constructor(token, expires, { name, email="" }) {
 		this.username = name
 		this.email = email
 		this.token = token;
 
 		window.token = token;
+		window.expires = expires;
 
 		this.subscriptions = new SubscriptionListModel();
 	}

@@ -1,5 +1,6 @@
 //! Data for a post
 import VotableMixin from "./VotableMixin";
+import UserVote from "./UserVote";
 
 // TODO: When we implement the server, we probably won't get content, etc. till in the detail view
 
@@ -13,17 +14,22 @@ export default class PostModel extends VotableMixin {
 	posted_to = "";
 	created_at = new Date();
 
-	constructor(id, title, is_link, content, poster_name, posted_to, created_at, votesExclUser=Math.floor(Math.random() * 100)) {
+	constructor({id, title, isLink, content, postedBy, postedTo, createdAt, votesExclUser, userVote}) {
 		super();
 		
 		this.id = id;
 		this.title = title;
-		this.is_link = is_link;
+		this.is_link = isLink;
 		this.content = content;
-		this.poster_name = poster_name;
-		this.posted_to = posted_to;
-		this.created_at = created_at;
+		this.poster_name = postedBy;
+		this.posted_to = postedTo;
+		this.created_at = new Date(createdAt);
 		this.votesExclUser = votesExclUser;
+		this.userVote = new UserVote();
+		if (userVote) {
+			this.userVote.has_voted = true;
+			this.userVote.was_upvote = userVote.isUpvote;
+		}
 	}
 }
 
@@ -37,5 +43,5 @@ export const generatePost = (overridesub=undefined) => {
 	let id = postId++;
 	last_posted_at.setHours(last_posted_at.getHours() + 1);
 	let posted = new Date(last_posted_at);
-	return new PostModel(id, "Post #" + id, false, "Lorem Ipsum...", "user" + id, overridesub || "sub" + id, posted);
+	return new PostModel({id, title:"Post #" + id, isLink: false, content: "Lorem Ipsum...", postedBy: "user" + id, postedTo: overridesub || "sub" + id, createdAt: posted, votesExclUser: 0});
 }

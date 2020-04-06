@@ -2,6 +2,7 @@
 
 import PaginationMixin from "./PaginationMixin";
 import PostModel, { generatePost } from "./PostModel";
+import { get_request } from "../util";
 
 // At some point this will be factored out into one class for user home (store.home)
 // and one class for /all page (store.all)
@@ -9,19 +10,12 @@ export default class HomePageModel extends PaginationMixin {
 	// The field we sort by
 	sorted_by = "created_at";
 	
-	doLoadAfter = () => new Promise((resolve, reject) => {
-		setTimeout(() => {
-			// Simulate an error
-			if (this.items.length > 40) {
-				reject("No more posts!");
+	doLoadAfter = () => get_request("/me/home").then(x => x.json())
+		.then(resp => {
+			if (resp.error) {
+				throw resp.error.message;
 			} else {
-				let posts = [];
-				for (let i = 0; i < 20; i++) {
-					posts.push(generatePost());
-				}
-
-				resolve(posts);
+				return resp.map(x => new PostModel(x));
 			}
-		}, 1000);
-	})
+		})
 }

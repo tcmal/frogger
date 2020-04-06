@@ -6,6 +6,7 @@ import PostModel, { generatePost } from "./PostModel";
 import SubModel from "./SubModel";
 import LoadableMixin from "./LoadableMixin";
 import PaginationMixin from "./PaginationMixin";
+import { get_request } from "../util";
 
 export default class SubPageModel extends LoadableMixin{
 
@@ -18,18 +19,6 @@ export default class SubPageModel extends LoadableMixin{
 	posts = []
 
 	@action
-	loadNextPage = () => {
-		if (this.posts.length > 0)
-			this.after = this.posts[this.posts.length - 1].created_at;
-
-		// TODO: Make actual requests to server
-		this.requestInProgress = true;
-		this.error = "";
-
-
-	}
-
-	@action
 	setLoadedSub = (name) => {
 		if (this.requestInProgress || this.error || (this.sub && this.sub.name == name))
 			return;
@@ -37,13 +26,19 @@ export default class SubPageModel extends LoadableMixin{
 		this.requestInProgress = true;
 		this.error = "";
 
-		setTimeout(action(() => {
-			this.sub = new SubModel(name);
-			this.posts = new SubPostModel(name);
-			this.posts.ensureNotEmpty();
-			
-			this.requestInProgress = false;
-		}), 300);
+		get_request("/subs/" + name + "/posts")
+			.then(x => x.json())
+			.then(action(resp => {
+				this.requestInProgress = false;
+				if (resp.error) {
+					this.error = resp.error.message;
+				} else {
+					this.sub = new SubModel(resp.subforum);
+					this.posts = new SubPostModel(name);
+
+					this.posts.setInitialItems(resp.posts.map(x => new PostModel(x)));
+				}
+			}));
 	}
 }
 

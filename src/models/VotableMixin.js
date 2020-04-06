@@ -22,6 +22,8 @@ export default class VotableMixin {
 	upvote = () => {
 		this.userVote.has_voted = true;
 		this.userVote.was_upvote = true;
+
+
 	}
 
 	@action

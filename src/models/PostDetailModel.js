@@ -3,9 +3,12 @@
 import { observable, computed, action } from "mobx";
 
 import PostModel from "./PostModel";
+import CommentModel from "./CommentModel";
 import { generateComment } from "./CommentModel";
 import PaginationMixin from "./PaginationMixin";
 import LoadableMixin from "./LoadableMixin";
+
+import { get_request } from "../util";
 
 export default class PostDetailModel extends LoadableMixin {
 	/// The post we're looking at
@@ -24,18 +27,23 @@ export default class PostDetailModel extends LoadableMixin {
 		this.requestInProgress = true;
 		this.error = "";
 
-		// TODO: Make actual request to server
-		setTimeout(action(() => {
-			if (this.id === 42) {
-				this.error = "Post not found!";
-			} else {
-				this.post = new PostModel(id, "Post #" + id, false, "Lorem Ipsum...", "user" + id, "sub" + id, new Date());
-				this.comments = new PostCommentsModel(id);
-				this.comments.ensureNotEmpty();
-			}
+		get_request("/posts/" + id + "/comments")
+			.then(x => x.json())
+			.then(action(resp => {
+				this.requestInProgress = false;
+				console.log('hellooo11!!!!');
+				console.log(this);
+				if (resp.error) {
+					this.error = resp.error.message;
+				} else {
+					this.post = new PostModel(resp.post);
+					this.comments = new PostCommentsModel(id);
 
-			this.requestInProgress = false;
-		}), 500);
+					this.comments.setInitialItems(resp.comments.map(x => new CommentModel(x)));
+
+					console.log(this);
+				}
+			}));
 	}
 }
 
