@@ -1,23 +1,35 @@
+import { store } from "./index";
+
 export const SERVER_BASE_URL = "http://localhost:3000/";
 
-export const json_request = (method, url, data) => fetch(SERVER_BASE_URL + url, {
+export const authed_request = (url, options, headers={}) => {
+	if (window.expires < (new Date(new Date().getTime() + (600 * 10)))) {
+		// Expires in next 10 minutes so schedule renewal
+		store.auth.renewToken();
+	}
+
+	if (window.expires < new Date()) {
+		// Expired
+		return new Promise((_,reject) => reject("Session expired. Please log in again."));
+	}
+
+	return fetch(SERVER_BASE_URL + url, {
+		headers: {
+			'Authorization': window.token ? 'Bearer ' + window.token : 'None',
+			...headers,
+		},
+		...options,
+	});
+};
+
+export const json_request = (method, url, data) => authed_request(url, {
 	method,
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': window.token ? 'Bearer ' + window.token : 'None',
-	},
-	body: JSON.stringify(data)
-});
+	body: JSON.stringify(data),
+}, {"Content-Type": "application/json"})
 
 export const post_request = (url, data) => json_request('POST', url, data);
 
-export const get_request = (url) => fetch(SERVER_BASE_URL + url, {
-	method: 'GET',
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': window.token ? 'Bearer ' + window.token : 'None',
-	},
-})
+export const get_request = (url) => authed_request(url, {method: 'GET'});
 
 export const friendlyTimeSince = (past) => {
 	const now = new Date();

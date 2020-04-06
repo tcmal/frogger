@@ -14,6 +14,9 @@ import Post from './Post';
 /// The main 'Switch' that handles which page is showing
 export const mainSwitch = (
 	<Switch>
+		<Route path="/f/all">
+			<Home forceAll={true} />
+		</Route>
 		<Route path="/f/:name">
 			<Sub />
 		</Route>
@@ -31,9 +34,6 @@ export const mainSwitch = (
 		</Route>
 		<Route path="/login">
 			<Login />
-		</Route>
-		<Route path="/all">
-			<Home forceAll={true} />
 		</Route>
 		<Route path="/">
 			<Home />

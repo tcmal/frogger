@@ -15,7 +15,7 @@ export default class PostModel extends VotableMixin {
 	created_at = new Date();
 
 	constructor({id, title, isLink, content, postedBy, postedTo, createdAt, votesExclUser, userVote}) {
-		super();
+		super('post', id);
 		
 		this.id = id;
 		this.title = title;
@@ -31,17 +31,4 @@ export default class PostModel extends VotableMixin {
 			this.userVote.was_upvote = userVote.isUpvote;
 		}
 	}
-}
-
-
-let postId = 0;
-let last_posted_at = new Date('2010-01-01 00:00:00');
-
-/// Generate a new post, using `overridesub` as the sub if specified
-/// This always gives a post posted after the previous generation
-export const generatePost = (overridesub=undefined) => {
-	let id = postId++;
-	last_posted_at.setHours(last_posted_at.getHours() + 1);
-	let posted = new Date(last_posted_at);
-	return new PostModel({id, title:"Post #" + id, isLink: false, content: "Lorem Ipsum...", postedBy: "user" + id, postedTo: overridesub || "sub" + id, createdAt: posted, votesExclUser: 0});
 }

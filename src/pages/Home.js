@@ -14,7 +14,8 @@ export default observer(({ forceAll }) => {
 
 	// Always use all store if we're on /all
 	// Otherwise, show user home if we can
-	const content = !forceAll && store.auth.isLoggedIn ? store.home : store.all;
+	const useAll = forceAll || !store.auth.isLoggedIn;
+	const content = useAll ? store.all : store.home;
 	const isLoggedIn = store.auth.isLoggedIn;
 
 	content.ensureNotEmpty();
@@ -24,20 +25,29 @@ export default observer(({ forceAll }) => {
 			<div className="content">
 				<PostList postList={content} />
 			</div>
-			{isLoggedIn ? 
-				<div className="sidebar">
-					<p><Link to="/create/p">Create a post</Link></p>
-					<p><Link to="/create/f">Create a sub</Link></p>
-					<SubscriptionList subscriptions={store.auth.loggedInUser.subscriptions}
-						onUnsubscribe={store.auth.unsubscribeFrom} />
-				</div> :
-				<div className="sidebar">
-					<h2>Sign in</h2>
+			<div className="sidebar">
+				{useAll ? 
+					<div>
+						<h2>/f/all</h2>
+						<p>You're viewing all posts.</p>
 
-					<LoginForm />
-					<Link to="/register">or register</Link>
-				</div>
-			}
+						{isLoggedIn ? <Link to="/">View your feed</Link> : ''}
+					</div>
+					:
+					<div>
+						<h2>Your feed</h2>
+						<p>You're viewing your feed.</p>
+
+						<Link to="/f/all">View all posts</Link>
+					</div>}
+				{!isLoggedIn ? 
+					<div>
+						<h2>Sign in</h2>
+
+						<LoginForm />
+						<Link to="/register">or register</Link>
+					</div> : ''}
+			</div>
 		</div>
 	)
 });

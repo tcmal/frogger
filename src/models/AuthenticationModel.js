@@ -16,6 +16,11 @@ export default class AuthenticationModel extends LoadableMixin {
 		if (localStorage.getItem('authedUser')) {
 			try {
 				const prevAuth = JSON.parse(localStorage.getItem('authedUser'));
+
+				if (new Date(prevAuth.expires) < new Date()) {
+					throw new Error("Expired token");
+				}
+
 				const user = {
 					name: prevAuth.username,
 					email: prevAuth.email
@@ -87,7 +92,27 @@ export default class AuthenticationModel extends LoadableMixin {
 				// TODO: Find somewhere to display this error, probably a toast
 				this.requestInProgress = false;
 				if (resp.error) {
-					this.error = resp.error;
+					this.error = resp.error.message;
+				}
+			}));
+	}
+
+	@action renewToken() {
+		this.requestInProgress = true;
+		this.error = "";
+
+		get_request("/user/renewToken")
+			.then(x => x.json())
+			.then(action(resp => {
+				this.requestInProgress = false;
+				if (resp.error) {
+					this.error = resp.error.message;
+				} else {
+					this.authedUser.token = resp.token;
+					this.authedUser.expires = new Date(resp.expires);
+
+					window.token = resp.token;
+					window.expires = new Date(resp.expires);
 				}
 			}));
 	}

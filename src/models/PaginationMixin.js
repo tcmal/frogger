@@ -27,6 +27,12 @@ export default class PaginationMixin extends LoadableMixin {
 		// If we have after, Find where it points at
 		// Otherwise, 0
 		let start = this.after !== undefined ? this.items.findIndex(x => x[this.sorted_by] > this.after) : 0;
+		
+		// We've went past the end of the list
+		if (start === -1) {
+			return [];
+		}
+
 		return this.items.slice(start, start + this.pageSize);
 	}
 
@@ -54,11 +60,17 @@ export default class PaginationMixin extends LoadableMixin {
 		this.doLoadAfter(this.after)
 			.then(action('PaginationMixin.LoadDone', (result) => {
 				this.items.push(...result)
+
 				this.requestInProgress = false;
+				if (result.length === 0) 
+					this.error = "No more items!";
+				
 			}))
 			.catch(action('PaginationMixin.LoadError', (error) => {
 				console.log(error);
 				this.error = error;
+				if (typeof this.error != "string")
+					this.error = error.toString();
 				this.requestInProgress = false;
 			}));
 

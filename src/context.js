@@ -3,6 +3,7 @@
 import React from 'react';
 
 import HomePageModel from './models/HomePageModel';
+import AllPageModel from './models/AllPageModel';
 import AuthenticationModel from './models/AuthenticationModel';
 import SubPageModel from './models/SubPageModel';
 import SubModModel from './models/SubModModel';
@@ -12,7 +13,7 @@ import PosterModel from './models/PosterModel';
 /// Initial state for app
 export const createStore = () => ({
 	home: new HomePageModel(),
-	all: new HomePageModel(), // TODO
+	all: new AllPageModel(),
 	auth: new AuthenticationModel(),
 	sub: new SubPageModel(),
 	subMod: new SubModModel(),
