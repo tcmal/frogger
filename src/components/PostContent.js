@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { sanitize } from "dompurify";
 
 import { friendlyTimeSince } from '../util';
 import VoteArrows from "./VoteArrows";
@@ -12,7 +13,7 @@ export default ({ post, showModActions, onDelete }) => (
 				: <h1 className="title">{post.title}</h1>}
 			
 			{post.is_link ? ''
-				: <p className="content">{post.content}</p>}
+				: <p className="content" dangerouslySetInnerHTML={{__html: sanitize(post.content)}}></p>}
 			
 			<span className="time">{friendlyTimeSince(post.created_at)}</span>
 			<span className="poster">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
+import { sanitize } from "dompurify";
 
 import VoteArrows from './VoteArrows';
 import { PaginationWrapper } from './Utils';
@@ -24,9 +25,7 @@ export const PostComment = ({ comment, showModActions, onDelete }) => (
 					</span>
 					: ''}
 
-				<p className="content">
-					{comment.content}
-				</p>
+				<p className="content" dangerouslySetInnerHTML={{__html: sanitize(comment.content)}}></p>
 			</div>
 		</div>
 		<div className="children">
