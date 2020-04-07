@@ -44,8 +44,7 @@ class PostPage extends React.Component {
 						<section className="comments">
 							<PostComments post={post.post}
 								comments={post.comments}
-								showModActions={showModActions} 
-								onDelete={subMod.deleteComment} />
+								showModActions={showModActions} />
 						</section>
 					</LoadableWrapper>
 				</LoadableWrapper>

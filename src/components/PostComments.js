@@ -21,9 +21,9 @@ export class PostComment extends React.Component {
 		};
 	}
 	render() {
-		const { comment, showModActions, onDelete } = this.props;
-		const { auth, post } = this.context;
-		const { isReplying} = this.state;
+		const { comment, showModActions } = this.props;
+		const { auth, post, subMod } = this.context;
+		const { isReplying } = this.state;
 
 		return (
 			<div className="commentContainer">
@@ -44,7 +44,10 @@ export class PostComment extends React.Component {
 							: ''}
 
 						{showModActions ? 
-							<span className="delete action" onClick={() => onDelete(comment)}>
+							<span className="delete action" onClick={() => 
+								subMod.deleteComment(comment)
+									.then(post.comments.clear)
+							}>
 								Delete
 							</span>
 							: ''}
@@ -56,7 +59,7 @@ export class PostComment extends React.Component {
 					{isReplying ? <NewCommentForm replyTo={comment.id} postId={comment.postId} />
 						: ''}
 					{comment.children.map(x =>
-						<PostComment key={x.id} comment={x} showModActions={showModActions} onDelete={onDelete} />
+						<PostComment key={x.id} comment={x} showModActions={showModActions} />
 					)}
 				</div>
 			</div>
@@ -64,12 +67,12 @@ export class PostComment extends React.Component {
 	}
 }
 
-export default observer(({ post, comments, showModActions, onDelete }) => (
+export default observer(({ post, comments, showModActions }) => (
 	<div className="commentsSection">
 		<NewCommentForm postId={post.id} />
 		<PaginationWrapper pagable={comments} className="rootCommentsContainer" showRefresh={true}>
 			{comments.currentPage.map(x => 
-				<PostComment key={x.id} comment={x} showModActions={showModActions} onDelete={onDelete} />
+				<PostComment key={x.id} comment={x} showModActions={showModActions} />
 			)}
 		</PaginationWrapper>
 	</div>

@@ -46,6 +46,17 @@ export default class SubModModel extends LoadableMixin {
 	@action deleteComment = (comment) => {
 		console.log(comment);
 		// TODO
+		this.requestInProgress = true;
+		return json_request("DELETE", "/posts/" + comment.postId + "/comments", {
+			commentId: comment.id,
+		})
+			.then(x => x.length > 0 ? x.json() : {})
+			.then(action(resp => {
+				this.requestInProgress = false;
+				if (resp.error) {
+					this.error = resp.error.message;
+				}
+			}));
 	}
 
 	@action redirectDone = () => {
