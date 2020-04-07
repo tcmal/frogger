@@ -30,8 +30,7 @@ export default class VotableMixin {
 			objectType: this.objectType,
 			objectId: this.objectId,
 			vote
-		}).then(x => !x.ok ? x.json() : {})
-		.then(resp => {
+		}).then(resp => {
 			if (resp.error) {
 				throw new Error(resp.error.message);
 			}

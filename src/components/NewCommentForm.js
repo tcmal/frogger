@@ -57,14 +57,11 @@ export default class NewCommentForm extends React.Component {
 		post_request("/posts/" + postId + "/comments", {
 			replyTo,
 			content,
-		}).then(x => x.json())
-		.then(resp => {
-			if (resp.error) {
-				this.setState({...this.state, requestInProgress: false, error: resp.error.message});
-			} else {
-				this.context.post.comments.acceptNewComment(new CommentModel(resp));
-			}
-		});
+		}).then(resp => {
+			this.context.post.comments.acceptNewComment(new CommentModel(resp));
+		}).catch(err => {
+			this.setState({...this.state, requestInProgress: false, error: err.toString()});
+		});;
 	}
 
 	// Helper to update form values

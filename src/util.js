@@ -1,16 +1,22 @@
+//! Utils and stuff
+
 import { store } from "./index";
 
+/// Base URL of server
 export const SERVER_BASE_URL = "http://localhost:3000/";
 
+/// Send a request with the authorisation header attached
 export const authed_request = (url, options, headers={}) => {
+	if (window.expires < new Date()) {
+		// Expired
+		store.auth.doLogout();
+
+		return new Promise((_,reject) => reject("Session expired. Please log in again."));
+	}
+
 	if (window.expires < (new Date(new Date().getTime() + (600 * 10)))) {
 		// Expires in next 10 minutes so schedule renewal
 		store.auth.renewToken();
-	}
-
-	if (window.expires < new Date()) {
-		// Expired
-		return new Promise((_,reject) => reject("Session expired. Please log in again."));
 	}
 
 	return fetch(SERVER_BASE_URL + url, {
@@ -19,6 +25,18 @@ export const authed_request = (url, options, headers={}) => {
 			...headers,
 		},
 		...options,
+	}).then(x => x.toString().length ? x.json() : {})
+	.then(resp => {
+		if (resp.error && resp.error.includes("Error verifying token")) {
+			store.auth.logout();
+
+			throw new Error("Session expires. Please log in again.");
+		}
+
+		if (resp.error)
+			throw new Error(resp.error.message);
+		
+		return resp;
 	});
 };
 

@@ -20,23 +20,31 @@ export const mainSwitch = (
 		<Route path="/f/:name">
 			<Sub />
 		</Route>
+
+		<Route path="/p/:id">
+			<Post />
+		</Route>
+
 		<Route path="/create/f">
 			<CreateSub />
 		</Route>
 		<Route path="/create/p">
 			<CreatePost />
 		</Route>
-		<Route path="/p/:id">
-			<Post />
-		</Route>
+		
 		<Route path="/register">
 			<Register />
 		</Route>
 		<Route path="/login">
 			<Login />
 		</Route>
-		<Route path="/">
+
+		<Route path="/" exact>
 			<Home />
+		</Route>
+
+		<Route path="/">
+			<h1>404</h1>
 		</Route>
 	</Switch>
 );

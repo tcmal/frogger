@@ -18,7 +18,6 @@ class PostPage extends React.Component {
 		}
 	}
 	render() {
-		
 		const { forceAll, match } = this.props;
 		const { post, auth, subMod } = this.context;
 		const { id } = match.params;
@@ -60,6 +59,10 @@ class PostPage extends React.Component {
 					redirect: "/f/" + this.context.post.post.posted_to
 				})
 			})
+			.catch(action(err => {
+				this.requestInProgress = false;
+				this.error = err.toString();
+			}));
 	}
 }
 

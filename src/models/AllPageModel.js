@@ -8,12 +8,8 @@ export default class HomePageModel extends PaginationMixin {
 	// The field we sort by
 	sorted_by = "created_at";
 	
-	doLoadAfter = () => get_request("/subs/all/posts").then(x => x.json())
+	doLoadAfter = () => get_request("/subs/all/posts")
 		.then(resp => {
-			if (resp.error) {
-				throw resp.error.message;
-			} else {
-				return resp.map(x => new PostModel(x));
-			}
+			return resp.map(x => new PostModel(x));
 		});
 }

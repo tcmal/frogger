@@ -35,16 +35,23 @@ export default class RegisterPage extends React.Component {
 
 				<form onSubmit={this.handleSubmit} className={"registerForm " + (auth.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="username">Username:</label>
-					<input name="username" required type="text" value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
+					<input name="username" type="text"
+						required minLength="4" maxLength="24"
+						value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
 
 					<label htmlFor="email">Email:</label>
-					<input name="email" type="email" value={this.state.email} onChange={this.updateValue.bind(this, "email")} />
+					<input name="email" type="email"
+						value={this.state.email} onChange={this.updateValue.bind(this, "email")} />
 
 					<label htmlFor="password">Password:</label>
-					<input name="password" required type="password" value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
+					<input name="password" type="password"
+						required minLength="8" maxLength="32"
+						value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
 
 					<label htmlFor="confirm">Confirm Password:</label>
-					<input name="confirm" required type="password" value={this.state.confirm} onChange={this.updateValue.bind(this, "confirm")} />
+					<input name="confirm" type="password"
+						required minLength="8" maxLength="32"
+						value={this.state.confirm} onChange={this.updateValue.bind(this, "confirm")} />
 
 					<input type="submit" value="Login" />
 				</form>

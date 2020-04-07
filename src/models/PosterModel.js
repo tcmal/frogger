@@ -7,24 +7,22 @@ import LoadableMixin from "./LoadableMixin";
 
 export default class PosterModel extends LoadableMixin {
 
-	@action makePost = (sub, title, is_link, content) => new Promise((resolve, reject) => {
+	@action makePost = (sub, title, is_link, content) => {
 		this.requestInProgress = true;
 		this.error = "";
 
-		post_request("/subs/" + sub + "/posts", {
+		return post_request("/subs/" + sub + "/posts", {
 			title,
 			isLink: is_link,
 			content
-		}).then(x => x.json())
-		.then(action(resp => {
+		}).then(action(resp => {
 			this.requestInProgress = false;
-			if (resp.error) {
-				this.error = resp.error.message;
-				reject(this.error);
-			} else {
-				resolve(resp.id);
-			}
+
+			return resp.id;
+		})).catch(action(err => {
+			this.requestInProgress = false;
+			this.error = err.toString();
 		}));
-	});
+	};
 
 }

@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { StoreContext } from '../context';
 
 @observer
-export default class CreatePost extends React.Component {
+export default class CreatePostPage extends React.Component {
 	static contextType = StoreContext;
 
 	constructor(props) {
@@ -39,18 +39,18 @@ export default class CreatePost extends React.Component {
 				<form onSubmit={this.handleSubmit} className={"postCreateForm " + (poster.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="sub">Sub:</label>
 					<input name="sub"
-						required maxLength="24"
+						required minLength="4" maxLength="24" pattern="^[A-z0-9\-_]+$"
 						type="text" value={this.state.sub} onChange={this.updateValue.bind(this, "sub")} />
 
 					<label htmlFor="title">Title:</label>
 					<input name="title"
-						required maxLength="250"
+						required minLength="4" maxLength="250"
 						type="text" value={this.state.title} onChange={this.updateValue.bind(this, "title")} />
 
 
 					<label htmlFor="content">Content (or link):</label>
 					<textarea name="content"
-						required maxLength="1000"
+						required minLength="4" maxLength="10000"
 						rows="20" cols="50"
 						type="text" value={this.state.content} onChange={this.updateValue.bind(this, "content")} />
 

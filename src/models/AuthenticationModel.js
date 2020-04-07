@@ -44,16 +44,15 @@ export default class AuthenticationModel extends LoadableMixin {
 	
 		post_request("/users/auth", {
 			username, password
-		}).then(x => x.json())
-		.then(action(resp => {
+		}).then(action(resp => {
 			this.requestInProgress = false;
-			if (resp.error) {
-				this.error = resp.error.message;
-			} else {
-				this.loggedInUser = new AuthedUser(resp.token, new Date(resp.expires), resp.user);
-				localStorage.setItem('authedUser', JSON.stringify(this.loggedInUser));
-			}
-		}))
+
+			this.loggedInUser = new AuthedUser(resp.token, new Date(resp.expires), resp.user);
+			localStorage.setItem('authedUser', JSON.stringify(this.loggedInUser));
+		})).catch(action(err => {
+			this.requestInProgress = false;
+			this.error = err.toString();
+		}));
 	}
 
 	@action
@@ -64,19 +63,22 @@ export default class AuthenticationModel extends LoadableMixin {
 		post_request("/users", {
 			name: username,
 			password, email
-		}).then(x => x.json())
-		.then(action(resp => {
+		}).then(action(resp => {
 			this.requestInProgress = false;
-			if (resp.error) {
-				this.error = resp.error.message;
-			} else {
-				this.attemptLogin(username, password);
-			}
+
+			this.attemptLogin(username, password);
+		})).catch(action(err => {
+			this.requestInProgress = false;
+			this.error = err.toString();
 		}));
 	}
 
 	@action doLogout() {
 		this.loggedInUser = null;
+		
+		window.token = null;
+		window.expires = null;
+
 		localStorage.removeItem('authedUser');
 	}
 
@@ -86,13 +88,12 @@ export default class AuthenticationModel extends LoadableMixin {
 		this.requestInProgress = true;
 		this.error = "";
 		json_request("DELETE", "/sub/" + sub.name + "/unsubscribe")
-			.then(x => x.json())
 			.then(action(resp => {
+				this.requestInProgress = false;
+			})).catch(action(err => {
 				// TODO: Find somewhere to display this error, probably a toast
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				}
+				this.error = err.toString();
 			}));
 	}
 
@@ -102,13 +103,12 @@ export default class AuthenticationModel extends LoadableMixin {
 		this.requestInProgress = true;
 		this.error = "";
 		json_request("POST", "/sub/" + sub.name + "/subscribe")
-			.then(x => x.json())
 			.then(action(resp => {
+				this.requestInProgress = false;
+			})).catch(action(err => {
 				// TODO: Find somewhere to display this error, probably a toast
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				}
+				this.error = err.toString();
 			}));
 	}
 
@@ -117,18 +117,19 @@ export default class AuthenticationModel extends LoadableMixin {
 		this.error = "";
 
 		get_request("/user/renewToken")
-			.then(x => x.json())
 			.then(action(resp => {
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				} else {
-					this.authedUser.token = resp.token;
-					this.authedUser.expires = new Date(resp.expires);
 
-					window.token = resp.token;
-					window.expires = new Date(resp.expires);
-				}
+				this.authedUser.token = resp.token;
+				this.authedUser.expires = new Date(resp.expires);
+
+				window.token = resp.token;
+				window.expires = new Date(resp.expires);
+			})).catch(action(err => {
+				this.requestInProgress = false;
+				this.error = err.toString();
+
+				this.doLogout();
 			}));
 	}
 }

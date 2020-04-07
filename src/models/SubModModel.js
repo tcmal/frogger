@@ -10,53 +10,47 @@ export default class SubModModel extends LoadableMixin {
 	@observable
 	redirect = ""
 
-	@action createSub = (name, description) => new Promise((resolve, reject) => {
+	@action createSub = (name, description) =>  {
 		this.requestInProgress = true;
 		this.error = "";
 
-		post_request("/subs", {
+		return post_request("/subs", {
 			name, description
-		}).then(x => x.json())
-		.then(action(resp => {
+		}).then(action(resp => {
 			this.requestInProgress = false;
-			if (resp.error) {
-				this.error = resp.error.message;
-				reject(this.error);
-			} else {
-				resolve(resp.name);
-			}
+
+			return resp.name;
+		})).catch(action(err => {
+			this.requestInProgress = false;
+			this.error = err.toString();
 		}));
-	})
+	}
 
 	@action deletePost = (post) => {
 		this.requestInProgress = true;
 		return json_request("DELETE", "/posts/" + post.id)
-			.then(x => x.length > 0 ? x.json() : {})
 			.then(action(resp => {
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				} else {
-					// TODO: Toast success
-					this.redirect = "/f/" + post.posted_to;
-				}
+				
+				// TODO: Toast success
+				this.redirect = "/f/" + post.posted_to;
+			})).catch(action(err => {
+				this.requestInProgress = false;
+				this.error = err.toString();
 			}));
 	}
 
 	@action deleteComment = (comment) => {
-		console.log(comment);
-		// TODO
 		this.requestInProgress = true;
+
 		return json_request("DELETE", "/posts/" + comment.postId + "/comments", {
 			commentId: comment.id,
-		})
-			.then(x => x.length > 0 ? x.json() : {})
-			.then(action(resp => {
-				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				}
-			}));
+		}).then(action(resp => {
+			this.requestInProgress = false;
+		})).catch(action(err => {
+			this.requestInProgress = false;
+			this.error = err.toString();
+		}));
 	}
 
 	@action redirectDone = () => {

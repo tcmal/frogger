@@ -33,17 +33,17 @@ export default class PostDetailModel extends LoadableMixin {
 		this.error = "";
 
 		get_request("/posts/" + id + "/comments")
-			.then(x => x.json())
 			.then(action(resp => {
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				} else {
-					this.post = new PostModel(resp.post);
-					this.comments = new PostCommentsModel(id);
+				
+				this.post = new PostModel(resp.post);
+				this.comments = new PostCommentsModel(id);
 
-					this.comments.setInitialItems(resp.comments.map(x => new CommentModel(x)));
-				}
+				this.comments.setInitialItems(resp.comments.map(x => new CommentModel(x)));
+			}))
+			.catch(action(err => {
+				this.requestInProgress = false;
+				this.error = err.toString();
 			}));
 	}
 }
@@ -59,7 +59,6 @@ export class PostCommentsModel extends PaginationMixin {
 	}
 
 	doLoadAfter = (after) => get_request("/posts/" + this.post_id + "/comments" + (after ? ("?after=" + after.toISOString()) : ''))
-		.then(x => x.json())
 		.then(resp => {
 			if (resp.error)
 				throw new Error(resp.error.message);

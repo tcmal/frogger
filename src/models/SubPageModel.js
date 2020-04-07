@@ -31,17 +31,17 @@ export default class SubPageModel extends LoadableMixin{
 		this.error = "";
 
 		get_request("/subs/" + name + "/posts")
-			.then(x => x.json())
 			.then(action(resp => {
 				this.requestInProgress = false;
-				if (resp.error) {
-					this.error = resp.error.message;
-				} else {
-					this.sub = new SubModel(resp.subforum);
-					this.posts = new SubPostModel(name);
+				
+				this.sub = new SubModel(resp.subforum);
+				this.posts = new SubPostModel(name);
 
-					this.posts.setInitialItems(resp.posts.map(x => new PostModel(x)));
-				}
+				this.posts.setInitialItems(resp.posts.map(x => new PostModel(x)));
+
+			})).catch(action(err => {
+				this.requestInProgress = false;
+				this.error = err.toString();
 			}));
 	}
 }
@@ -55,20 +55,11 @@ export class SubPostModel extends PaginationMixin {
 		this.sub_name = sub_name;
 	}
 
-	doLoadAfter = (after) => new Promise((resolve, reject) => {
-		setTimeout(() => {
-			// Simulate an error
-			if (this.items.length > 40) {
-				reject("No more posts!");
-			} else {
-				let posts = [];
-				for (let i = 0; i < this.pageSize; i++) {
-					posts.push(generatePost(this.sub_name));
-				}
-
-				resolve(posts);
-			}
+	doLoadAfter = (after) => get_request("/subs/" + name + "/posts" + (after ? '?after=' + after.toISOString() : ''))
+		.then(action(resp => {
 			this.requestInProgress = false;
-		}, 1000);
-	})
+
+			return resp.posts.map(x => new PostModel(x));
+			
+		}));
 }

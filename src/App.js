@@ -1,13 +1,12 @@
 import { hot } from 'react-hot-loader';
 import React from 'react';
-
-import "./css/index.css";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import { StoreProvider } from './context';
 import { mainSwitch } from './pages';
 import Header from './components/Header';
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
+import "./css/index.css";
 
 const App = ({ store }) => (
 	<div>
