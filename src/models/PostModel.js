@@ -1,5 +1,6 @@
 //! Data for a post
 import VotableMixin from "./VotableMixin";
+import SubModel from  "./SubModel";
 import UserVote from "./UserVote";
 
 // TODO: When we implement the server, we probably won't get content, etc. till in the detail view
@@ -12,9 +13,10 @@ export default class PostModel extends VotableMixin {
 	content = "";
 	poster_name = "";
 	posted_to = "";
+	is_mod = false;
 	created_at = new Date();
 
-	constructor({id, title, isLink, content, postedBy, postedTo, createdAt, votesExclUser, userVote}) {
+	constructor({id, title, isLink, content, postedBy, postedTo="", subforum={}, createdAt, votesExclUser, userVote}) {
 		super('post', id);
 		
 		this.id = id;
@@ -22,7 +24,14 @@ export default class PostModel extends VotableMixin {
 		this.is_link = isLink;
 		this.content = content;
 		this.poster_name = postedBy;
-		this.posted_to = postedTo;
+		if (subforum) {
+			this.subforum = new SubModel(subforum);
+		}
+		if (!postedTo) {
+			this.posted_to = subforum.name;
+		} else {
+			this.posted_to = postedTo;
+		}
 		this.created_at = new Date(createdAt);
 		this.votesExclUser = votesExclUser;
 		this.userVote = new UserVote();

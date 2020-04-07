@@ -15,15 +15,20 @@ export default class PostDetailModel extends LoadableMixin {
 	@observable
 	post = null;
 
+	@observable
+	loading_post = null;
+
 	/// All its comments. This won't be populated till after `post`` is loaded
 	@observable
 	comments = null;
 
 	@action
 	setPost = (id) => {
-		if (this.requestInProgress || this.error || (this.post && this.post.id == id))
+		if (this.loading_post === id && (this.requestInProgress || this.error || this.post))
 			return;
 
+		this.loading_post = id;
+		this.post = null;
 		this.requestInProgress = true;
 		this.error = "";
 
@@ -61,4 +66,10 @@ export class PostCommentsModel extends PaginationMixin {
 
 			return resp.comments.map(x => new CommentModel(x));
 		});
+
+	@action
+	acceptNewComment = (comment) => {
+		//TODO
+		this.clear();
+	}
 }

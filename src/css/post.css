@@ -44,13 +44,3 @@
 	border-top: 1px solid black;
 	padding-top: 1rem;
 }
-
-.rootCommentsContainer {
-	position: relative;
-}
-
-.rootCommentsContainer .next {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-}

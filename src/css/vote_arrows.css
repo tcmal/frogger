@@ -11,9 +11,17 @@
 
 .voteArrows .up, .voteArrows .down {
 	background: none;
+	border: none;
 	border-radius: 50% 50%;
-	padding: 0.3rem;
+	box-sizing: border-box;
 }
+
+.voteArrows .up:after, .voteArrows .down:after {
+	padding-bottom: 100%;
+	display: block;
+	content: "";
+}
+
 .voteArrows .number {
 	text-align: center;
 }

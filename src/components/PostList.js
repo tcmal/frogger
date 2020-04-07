@@ -30,7 +30,7 @@ export const PostListItem = ({ item }) => (
 );
 
 export default observer(({ postList }) => (
-	<PaginationWrapper pagable={postList} className="postList">
+	<PaginationWrapper pagable={postList} className="postList" showRefresh={true}>
 		{postList.currentPage.map(x => 
 			<PostListItem key={x.id} item={x} />
 		)}

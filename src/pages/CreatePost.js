@@ -73,7 +73,7 @@ export default class CreatePost extends React.Component {
 		
 		// TODO: Better validation
 
-		const is_link = content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/);
+		const is_link = content.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) !== undefined;
 
 		this.context.poster.makePost(sub, title, is_link, content).then((id) => {
 			this.setState({...this.state, redirect: "/p/" + id})

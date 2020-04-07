@@ -11,14 +11,15 @@ export const LoadableWrapper = observer(({ loadable, children, className }) => {
 	}
 });
 
-export const PaginationWrapper = observer(({ pagable, children, className="" }) => (
+export const PaginationWrapper = observer(({ pagable, children, className="", showRefresh=false }) => (
 	<section className="paginationWrapper">
-		
+		{showRefresh ? <a href="#" className="refresh" onClick={pagable.clear}>Refresh</a> : ''}
+
 		<LoadableWrapper loadable={pagable} className={className}>
 			{children}
 		</LoadableWrapper>
 
 		{pagable.hasPrev ? <button onClick={pagable.loadPrevPage} className="btn prev">Previous</button> : ''}
-		<button onClick={pagable.loadNextPage} className="btn next">Next</button>
+		{pagable.hasNext ? <button onClick={pagable.loadNextPage} className="btn next">Next</button> : ''}
 	</section>
 ));

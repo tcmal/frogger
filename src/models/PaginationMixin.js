@@ -17,6 +17,9 @@ export default class PaginationMixin extends LoadableMixin {
 	@observable
 	pageSize = 20;
 
+	@observable
+	hasNext = true;
+
 	sorted_by = "";
 
 	// Returns only what should be viewable on the page
@@ -64,6 +67,9 @@ export default class PaginationMixin extends LoadableMixin {
 				this.requestInProgress = false;
 				if (result.length === 0) 
 					this.error = "No more items!";
+
+				if (result.length < this.pageSize)
+					this.hasNext = false;
 				
 			}))
 			.catch(action('PaginationMixin.LoadError', (error) => {
@@ -80,6 +86,8 @@ export default class PaginationMixin extends LoadableMixin {
 	loadPrevPage = () => {
 		if (!this.hasPrev)
 			return;
+
+		this.error = "";
 		
 		// The current start of our page
 		const startCur = this.items.findIndex(x => x[this.sorted_by] > this.after);
@@ -108,6 +116,11 @@ export default class PaginationMixin extends LoadableMixin {
 		
 		if (this.items.length == 0) {
 			this.error = "No more items!";
+
+		}
+
+		if (this.items.length < this.pageSize) {
+			this.hasNext = false;
 		}
 	}
 

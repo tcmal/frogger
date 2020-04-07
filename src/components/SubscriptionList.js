@@ -1,13 +1,18 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { Link } from "react-router-dom";
+
 import { PaginationWrapper } from "./Utils";
 import { useStore } from "../context";
 
+
 export const SubscriptionListItem = ({ isOwner, item, onUnsubscribe }) => (
 	<div className="subListItem">
-		{isOwner ? '' : 
-			<button className="remove" onClick={() => onUnsubscribe(item.name)}>-</button> }
-		<p className="name">{item.name}</p>
+		<div className="remove">
+			{isOwner ? '' : 
+				<button onClick={() => onUnsubscribe(item.name)}>-</button> }
+		</div>
+		<p className="name"><Link to={"/f/" + item.name}>{item.name}</Link></p>
 	</div>
 );
 

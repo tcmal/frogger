@@ -19,12 +19,10 @@
 }
 
 .subListItem .remove {
-	padding: 0.3rem;
-	height: auto;
-	background: red;
-	color: white;
-	border-radius: 0.6rem;
-	margin: 0 2rem;
+	box-sizing: border-box;
+	width: 15%;
+}
 
-	align-self: center;
+.subListItem .remove button {
+	margin: 0 auto;
 }

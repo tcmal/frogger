@@ -8,7 +8,7 @@ export default class HomePageModel extends PaginationMixin {
 	// The field we sort by
 	sorted_by = "created_at";
 	
-	doLoadAfter = () => get_request("/me/home").then(x => x.json())
+	doLoadAfter = (after) => get_request("/me/home/" + (after ? ("?after=" + after.toISOString()) : '')).then(x => x.json())
 		.then(resp => {
 			if (resp.error) {
 				throw resp.error.message;

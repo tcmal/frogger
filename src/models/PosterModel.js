@@ -1,6 +1,7 @@
 //! Stores authentication state
 
 import { observable, computed, action } from "mobx";
+import { post_request } from "../util";
 
 import LoadableMixin from "./LoadableMixin";
 
@@ -10,15 +11,20 @@ export default class PosterModel extends LoadableMixin {
 		this.requestInProgress = true;
 		this.error = "";
 
-		setTimeout(action(() => {
-			if (title == "frick") {
-				this.error = "No swears allowed!";
-				reject();
-			} else {
-				resolve(420);
-			}
+		post_request("/subs/" + sub + "/posts", {
+			title,
+			isLink: is_link,
+			content
+		}).then(x => x.json())
+		.then(action(resp => {
 			this.requestInProgress = false;
-		}), 300);
+			if (resp.error) {
+				this.error = resp.error.message;
+				reject(this.error);
+			} else {
+				resolve(resp.id);
+			}
+		}));
 	});
 
 }

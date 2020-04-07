@@ -37,8 +37,11 @@ export default observer(({ forceAll }) => {
 					<div>
 						<h2>Your feed</h2>
 						<p>You're viewing your feed.</p>
-
+						
 						<Link to="/f/all">View all posts</Link>
+
+						<SubscriptionList subscriptions={store.auth.loggedInUser.subscriptions}
+							onUnsubscribe={store.auth.unsubscribeFrom} />
 					</div>}
 				{!isLoggedIn ? 
 					<div>
@@ -46,7 +49,11 @@ export default observer(({ forceAll }) => {
 
 						<LoginForm />
 						<Link to="/register">or register</Link>
-					</div> : ''}
+					</div> : 
+					<div>
+						<p><Link to="/create/p">Create a post</Link></p>
+						<p><Link to="/create/f">Create a sub</Link></p>
+					</div>}
 			</div>
 		</div>
 	)

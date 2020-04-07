@@ -12,6 +12,9 @@ export default class SubPageModel extends LoadableMixin{
 
 	@observable
 	sub = null;
+
+	@observable
+	loading_sub = ""
 	
 	/// Posts for this sub. This shouldn't be accessed until after 
 	/// sub is loaded
@@ -20,10 +23,11 @@ export default class SubPageModel extends LoadableMixin{
 
 	@action
 	setLoadedSub = (name) => {
-		if (this.requestInProgress || this.error || (this.sub && this.sub.name == name))
+		if (this.loading_sub === name && (this.requestInProgress || this.error || this.sub))
 			return;
 
 		this.requestInProgress = true;
+		this.loading_sub = name;
 		this.error = "";
 
 		get_request("/subs/" + name + "/posts")

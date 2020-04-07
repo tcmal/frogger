@@ -13,3 +13,18 @@
 	display: inline-block;
 	margin-right: 0.6rem;
 }
+
+.commentContainer .comment .listing span.action {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.newCommentForm {
+	padding: 1rem;
+}
+
+.newCommentForm textarea {
+	display: block;
+	margin-bottom: 1rem;
+}

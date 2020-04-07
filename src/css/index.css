@@ -6,6 +6,7 @@
 @import "./post.css";
 @import "./vote_arrows.css";
 @import "./sub_list.css";
+@import "./pagination.css";
 
 body {
 	font-family: 'Roboto', sans-serif;

@@ -80,15 +80,30 @@ export default class AuthenticationModel extends LoadableMixin {
 		localStorage.removeItem('authedUser');
 	}
 
-	@action unsubscribeFrom = (name) => {
-		this.loggedInUser.subscriptions.items = this.loggedInUser.subscriptions.items.filter(x => x.name != name);
+	@action unsubscribeFrom = (sub) => {
+		this.loggedInUser.subscriptions.items = this.loggedInUser.subscriptions.items.filter(x => x.name != sub.name);
 
 		this.requestInProgress = true;
 		this.error = "";
-		json_request("DELETE", "/sub/" + name + "/unsubscribe")
+		json_request("DELETE", "/sub/" + sub.name + "/unsubscribe")
 			.then(x => x.json())
 			.then(action(resp => {
-				console.log(resp);
+				// TODO: Find somewhere to display this error, probably a toast
+				this.requestInProgress = false;
+				if (resp.error) {
+					this.error = resp.error.message;
+				}
+			}));
+	}
+
+	@action subscribeTo = (sub) => {
+		this.loggedInUser.subscriptions.items.push(sub);
+
+		this.requestInProgress = true;
+		this.error = "";
+		json_request("POST", "/sub/" + sub.name + "/subscribe")
+			.then(x => x.json())
+			.then(action(resp => {
 				// TODO: Find somewhere to display this error, probably a toast
 				this.requestInProgress = false;
 				if (resp.error) {
