@@ -33,7 +33,7 @@ export default class NewCommentForm extends React.Component {
 		return (
 			<section className="newCommentFormContainer">
 				<form onSubmit={this.handleSubmit} className={"newCommentForm " + (requestInProgress ? 'disabled' : '')}>
-					<textarea value={content} onChange={this.updateValue.bind(this, "content")}
+					<textarea aria-label="Content" value={content} onChange={this.updateValue.bind(this, "content")}
 						cols="100"
 						rows="10" />
 

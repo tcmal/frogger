@@ -7,16 +7,18 @@ export const SERVER_BASE_URL = "http://localhost:3000/";
 
 /// Send a request with the authorisation header attached
 export const authed_request = (url, options, headers={}) => {
-	if (window.expires < new Date()) {
-		// Expired
-		store.auth.doLogout();
+	if (window.expires) {
+		if (window.expires < new Date()) {
+			// Expired
+			store.auth.doLogout();
 
-		return new Promise((_,reject) => reject("Session expired. Please log in again."));
-	}
+			return new Promise((_,reject) => reject("Session expired. Please log in again."));
+		}
 
-	if (window.expires < (new Date(new Date().getTime() + (600 * 10)))) {
-		// Expires in next 10 minutes so schedule renewal
-		store.auth.renewToken();
+		if (window.expires < (new Date(new Date().getTime() + (600 * 10)))) {
+			// Expires in next 10 minutes so schedule renewal
+			store.auth.renewToken();
+		}
 	}
 
 	return fetch(SERVER_BASE_URL + url, {
@@ -27,10 +29,10 @@ export const authed_request = (url, options, headers={}) => {
 		...options,
 	}).then(x => x.toString().length ? x.json() : {})
 	.then(resp => {
-		if (resp.error && resp.error.includes("Error verifying token")) {
-			store.auth.logout();
+		if (resp.error && resp.error.message.includes("Error verifying token")) {
+			store.auth.doLogout();
 
-			throw new Error("Session expires. Please log in again.");
+			throw new Error("Session expired. Please log in again.");
 		}
 
 		if (resp.error)
@@ -72,3 +74,5 @@ export const friendlyTimeSince = (past) => {
 		return Math.floor(delta / 60 / 60 / 24 / 30 / 12) + ' years ago';
 	}
 };
+
+export const setDocTitle = (title) => document.title = "Frogger - " + title;

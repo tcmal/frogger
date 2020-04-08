@@ -10,7 +10,7 @@ export default observer(() => {
 		<header>
 			<Link to="/"><h1 className="title">frogger</h1></Link>
 
-			<div className="right">
+			<nav className="right">
 				{auth.isLoggedIn ?
 					<span className="userLinks">
 						<Link to={"/u/" + auth.loggedInUser.username}>{auth.loggedInUser.username}</Link> | 
@@ -23,7 +23,7 @@ export default observer(() => {
 						<Link to="/login">Login</Link> |
 						<Link to="/register">Register</Link>
 					</span>}
-			</div>
+			</nav>
 		</header>
 	);
 });

@@ -30,10 +30,10 @@ export default class LoginForm extends React.Component {
 			<section className="loginFormContainer formContainer">
 				<form onSubmit={this.handleSubmit} className={"loginForm " + (auth.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="username">Username:</label>
-					<input name="username" required type="text" value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
+					<input id="username" required type="text" value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
 
 					<label htmlFor="password">Password:</label>
-					<input name="password" required type="password" value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
+					<input id="password" required type="password" value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
 
 					<input type="submit" value="Login" className="btn primary" />
 				</form>

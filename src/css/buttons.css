@@ -14,3 +14,12 @@
 	background: #3d5afe;
 	color: white;
 }
+
+button.linkStyling {
+	border: 0;
+	background: none;
+
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+}

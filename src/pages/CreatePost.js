@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
+import { setDocTitle } from "../util";
 import { StoreContext } from '../context';
 
 @observer
@@ -63,6 +64,8 @@ export default class CreatePostPage extends React.Component {
 	componentDidMount() {
 		// Don't keep authentication errors if user leaves page and comes back
 		this.context.poster.error = "";
+		
+		setDocTitle("Create Post");
 	}
 
 	handleSubmit = (e) => {

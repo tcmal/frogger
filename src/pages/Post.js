@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { withRouter, Link, Redirect } from 'react-router-dom';
 
+import { setDocTitle } from "../util";
 import { StoreContext } from '../context';
 import PostComments from '../components/PostComments';
 import PostContent from '../components/PostContent';
@@ -27,6 +28,10 @@ class PostPage extends React.Component {
 
 		if (this.state.redirect) {
 			return (<Redirect to={this.state.redirect} />)
+		}
+
+		if (post.post) {
+			setDocTitle(post.post.title);
 		}
 
 		const showModActions = post.post && auth.isLoggedIn && post.post.subforum.ownerName === auth.loggedInUser.username;

@@ -5,7 +5,7 @@ import { createStore } from "./context";
 
 import App from './App';
 
-const store = createStore();
+export const store = createStore();
 
 render(<App store={store} />,
 	document.getElementById("root")

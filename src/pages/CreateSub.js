@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
 import { StoreContext } from '../context';
+import { setDocTitle } from "../util";
 
 @observer
 export default class CreateSubPage extends React.Component {
@@ -56,6 +57,8 @@ export default class CreateSubPage extends React.Component {
 	componentDidMount() {
 		// Don't keep authentication errors if user leaves page and comes back
 		this.context.subMod.error = "";
+
+		setDocTitle("Create Sub");
 	}
 
 	handleSubmit = (e) => {

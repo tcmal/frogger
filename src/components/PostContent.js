@@ -8,7 +8,7 @@ import VoteArrows from "./VoteArrows";
 export default ({ post, showModActions, onDelete }) => (
 	<div className="postDetailContainer">
 		<VoteArrows votable={post} />
-		<div className="postDetail">
+		<article className="postDetail">
 			{post.is_link ? <a className="supressLinkStyling"  href={post.content}><h1 className="title link">{post.title}</h1></a>
 				: <h1 className="title">{post.title}</h1>}
 			
@@ -28,10 +28,10 @@ export default ({ post, showModActions, onDelete }) => (
 			</span>
 
 			{showModActions ? 
-				<span className="delete" onClick={() => onDelete(post)}>
+				<button className="delete linkStyling" onClick={() => onDelete(post)}>
 					Delete
-				</span>
+				</button>
 				: ''}
-		</div>
+		</article>
 	</div>
 );

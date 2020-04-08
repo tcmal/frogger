@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
 import { StoreContext } from '../context';
+import { setDocTitle } from "../util";
 
 import LoginForm from '../components/LoginForm';
 
@@ -12,6 +13,8 @@ export default class LoginPage extends React.Component {
 
 	render() {
 		const { auth } = this.context;
+
+		setDocTitle("Login");
 
 		// Redirect home if user is logged in
 		if (auth.isLoggedIn) {

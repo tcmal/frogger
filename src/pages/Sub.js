@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { useParams, Link } from 'react-router-dom';
 
+import { setDocTitle } from "../util";
 import { useStore } from '../context';
 import PostList from '../components/PostList';
 import SubSidebar from '../components/SubSidebar';
@@ -16,6 +17,10 @@ export default observer(({ forceAll }) => {
 
 	// Make sure we load the right sub
 	sub.setLoadedSub(name);
+
+	if (sub.sub) {
+		setDocTitle(sub.sub.name);
+	}
 
 	return (
 		<LoadableWrapper loadable={sub}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Redirect } from 'react-router-dom';
 
+import { setDocTitle } from "../util";
 import { StoreContext } from '../context';
 
 @observer
@@ -28,6 +29,8 @@ export default class RegisterPage extends React.Component {
 			return <Redirect to="/" />
 		}
 
+		setDocTitle("Register");
+
 		return (
 			<main className="registerPage formPage formContainer">
 				<h1 className="pageTitle">Register</h1>
@@ -35,21 +38,21 @@ export default class RegisterPage extends React.Component {
 
 				<form onSubmit={this.handleSubmit} className={"registerForm " + (auth.requestInProgress ? 'disabled' : '')}>
 					<label htmlFor="username">Username:</label>
-					<input name="username" type="text"
+					<input id="username" type="text"
 						required minLength="4" maxLength="24"
 						value={this.state.username} onChange={this.updateValue.bind(this, "username")} />
 
 					<label htmlFor="email">Email:</label>
-					<input name="email" type="email"
+					<input id="email" type="email"
 						value={this.state.email} onChange={this.updateValue.bind(this, "email")} />
 
 					<label htmlFor="password">Password:</label>
-					<input name="password" type="password"
+					<input id="password" type="password"
 						required minLength="8" maxLength="32"
 						value={this.state.password} onChange={this.updateValue.bind(this, "password")} />
 
 					<label htmlFor="confirm">Confirm Password:</label>
-					<input name="confirm" type="password"
+					<input id="confirm" type="password"
 						required minLength="8" maxLength="32"
 						value={this.state.confirm} onChange={this.updateValue.bind(this, "confirm")} />
 

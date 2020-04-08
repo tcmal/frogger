@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { observer } from 'mobx-react';
 import { useStore } from '../context';
+import { setDocTitle } from "../util";
 
 import PostList from '../components/PostList';
 import SubscriptionList from '../components/SubscriptionList';
@@ -20,12 +21,14 @@ export default observer(({ forceAll }) => {
 
 	content.ensureNotEmpty();
 
+	setDocTitle(useAll ? "Home" : "All");
+
 	return (
-		<div className="homePage">
-			<div className="content">
+		<main className="homePage">
+			<article className="content">
 				<PostList postList={content} />
-			</div>
-			<div className="sidebar">
+			</article>
+			<aside className="sidebar">
 				{useAll ? 
 					<div>
 						<h2>/f/all</h2>
@@ -54,7 +57,7 @@ export default observer(({ forceAll }) => {
 						<p><Link to="/create/p">Create a post</Link></p>
 						<p><Link to="/create/f">Create a sub</Link></p>
 					</div>}
-			</div>
-		</div>
+			</aside>
+		</main>
 	)
 });
