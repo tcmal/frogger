@@ -67,13 +67,15 @@ export class PostComment extends React.Component {
 	}
 }
 
-export default observer(({ post, comments, showModActions }) => (
-	<div className="commentsSection">
-		<NewCommentForm postId={post.id} />
-		<PaginationWrapper pagable={comments} className="rootCommentsContainer" showRefresh={true}>
-			{comments.currentPage.map(x => 
-				<PostComment key={x.id} comment={x} showModActions={showModActions} />
-			)}
-		</PaginationWrapper>
-	</div>
-));
+export default observer(function PostComments({ post, comments, showModActions }) {
+	return (
+		<div className="commentsSection">
+			<NewCommentForm postId={post.id} />
+			<PaginationWrapper pagable={comments} className="rootCommentsContainer" showRefresh={true}>
+				{comments.currentPage.map(x => 
+					<PostComment key={x.id} comment={x} showModActions={showModActions} />
+				)}
+			</PaginationWrapper>
+		</div>
+	)
+});

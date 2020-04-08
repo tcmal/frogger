@@ -6,17 +6,19 @@ import { PaginationWrapper } from "./Utils";
 import { useStore } from "../context";
 
 
-export const SubscriptionListItem = ({ isOwner, item, onUnsubscribe }) => (
-	<div className="subListItem">
-		<div className="remove">
-			{isOwner ? '' : 
-				<button onClick={() => onUnsubscribe(item.name)}>-</button> }
+export const SubscriptionListItem = function SubscriptionListItem({ isOwner, item, onUnsubscribe }) {
+	return (
+		<div className="subListItem">
+			<div className="remove">
+				{isOwner ? '' : 
+					<button onClick={() => onUnsubscribe(item.name)}>-</button> }
+			</div>
+			<p className="name"><Link to={"/f/" + item.name}>{item.name}</Link></p>
 		</div>
-		<p className="name"><Link to={"/f/" + item.name}>{item.name}</Link></p>
-	</div>
-);
+	);
+};
 
-export default observer(({ subscriptions, onUnsubscribe }) => {
+export default observer(function SubscriptionList({ subscriptions, onUnsubscribe }) {
 	subscriptions.ensureNotEmpty();
 	const { auth } = useStore();
 

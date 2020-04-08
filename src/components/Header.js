@@ -3,7 +3,7 @@ import { useStore } from '../context';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-export default observer(() => {
+export default observer(function Header() {
 	const { auth } = useStore();
 
 	return (

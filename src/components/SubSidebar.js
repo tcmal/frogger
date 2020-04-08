@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useStore } from "../context";
 
 
-export default observer(({ sub }) => {
+export default observer(function SubSidebar({ sub }) {
 	const { auth } = useStore();
 
 	return (

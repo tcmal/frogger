@@ -4,7 +4,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { useStore } from "../context";
 
-export default observer(({ votable }) => {
+export default observer(function VoteArrows({ votable }) {
 	const { auth } = useStore();
 
 	const canVote = auth.isLoggedIn;
@@ -14,6 +14,7 @@ export default observer(({ votable }) => {
 
 	let upFunc = hasUpvoted ? votable.clearVote : votable.upvote;
 	let downFunc = hasDownvoted ? votable.clearVote : votable.downvote;
+	
 	if (!canVote) {
 		upFunc = () => null;
 		downFunc = upFunc;
