@@ -56,7 +56,7 @@ export default class RegisterPage extends React.Component {
 						required minLength="8" maxLength="32"
 						value={this.state.confirm} onChange={this.updateValue.bind(this, "confirm")} />
 
-					<input type="submit" value="Login" />
+					<input type="submit" value="Register" className="btn primary" />
 				</form>
 			</main>
 		);

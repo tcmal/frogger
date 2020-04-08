@@ -27,7 +27,7 @@ export class PostComment extends React.Component {
 
 		return (
 			<div className="commentContainer">
-				<div className="comment">
+				<div className="comment" role="comment" data-author={comment.poster_name}>
 					<VoteArrows votable={comment} />
 					<div className="listing">
 						<span className="poster">
@@ -35,7 +35,7 @@ export class PostComment extends React.Component {
 								/u/{comment.poster_name}
 							</Link>
 						</span>
-						<span className="time">{friendlyTimeSince(comment.created_at)}</span>
+						<time datetime={comment.created_at.toISOString()} className="time">{friendlyTimeSince(comment.created_at)}</time>
 
 						{auth.isLoggedIn ? 
 							<span className="reply action" onClick={() => this.setState({...this.state, isReplying: !isReplying})}>

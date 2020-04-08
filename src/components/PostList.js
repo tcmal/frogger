@@ -8,7 +8,7 @@ import { PaginationWrapper } from './Utils';
 import VoteArrows from './VoteArrows';
 
 export const PostListItem = ({ item }) => (
-	<div className="post">
+	<div className="post" role="listitem">
 		<VoteArrows className="voting" votable={item} />
 		<div className="listing">
 			<Link to={"/p/" + item.id} className="supressLinkStyling">

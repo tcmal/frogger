@@ -8,7 +8,7 @@ import VoteArrows from "./VoteArrows";
 export default ({ post, showModActions, onDelete }) => (
 	<div className="postDetailContainer">
 		<VoteArrows votable={post} />
-		<article className="postDetail">
+		<article className="postDetail" role="main">
 			{post.is_link ? <a className="supressLinkStyling"  href={post.content}><h1 className="title link">{post.title}</h1></a>
 				: <h1 className="title">{post.title}</h1>}
 			

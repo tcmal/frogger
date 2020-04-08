@@ -12,7 +12,7 @@ export const LoadableWrapper = observer(({ loadable, children, className }) => {
 });
 
 export const PaginationWrapper = observer(({ pagable, children, className="", showRefresh=false }) => (
-	<section className="paginationWrapper">
+	<section className="paginationWrapper" role="list">
 		{showRefresh ? <button href="#" className="refresh linkStyling" onClick={pagable.clear}>Refresh</button> : ''}
 
 		<LoadableWrapper loadable={pagable} className={className}>
