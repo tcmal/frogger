@@ -1,21 +1,22 @@
+/* Page layout */
 .postPage {
 	width: 70%;
 	margin: 0 auto;
 	padding-bottom: 3rem;
 }
 
-.postPage .loading {}
-
 .postPage .post {
 	margin: 3rem 0;
 }
 
+/* VoteArrows side-by-side */
 .postDetailContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: top;
 }
 
+/* Content */
 .postDetail {
 	flex-grow: 1;
 }
@@ -40,6 +41,7 @@
 	margin: 0 1rem;
 }
 
+/* Comments */
 .postPage .comments {
 	border-top: 1px solid black;
 	padding-top: 1rem;

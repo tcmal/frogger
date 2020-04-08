@@ -7,12 +7,12 @@ import { useStore } from "../context";
 
 
 export const SubscriptionListItem = function SubscriptionListItem({ isOwner, item, onUnsubscribe }) {
+	const { auth } = useStore();
+
 	return (
 		<div className="subListItem">
-			<div className="remove">
-				{isOwner ? '' : 
-					<button onClick={() => onUnsubscribe(item.name)}>-</button> }
-			</div>
+			{item.ownerName == auth.loggedInUser.username ? <div className="padding"></div> : 
+				<button className="remove" onClick={() => auth.unsubscribeFrom(item)}>-</button>}
 			<p className="name"><Link to={"/f/" + item.name}>{item.name}</Link></p>
 		</div>
 	);
@@ -20,15 +20,12 @@ export const SubscriptionListItem = function SubscriptionListItem({ isOwner, ite
 
 export default observer(function SubscriptionList({ subscriptions, onUnsubscribe }) {
 	subscriptions.ensureNotEmpty();
-	const { auth } = useStore();
-
 	return (
 		<div className="subListContainer">
 			<h3>Your subscriptions</h3>
 			<PaginationWrapper pagable={subscriptions} className="subList">
 				{subscriptions.currentPage.map(x => 
-					<SubscriptionListItem isOwner={x.ownerName == auth.loggedInUser.username}
-						onUnsubscribe={onUnsubscribe} key={x.name} item={x} />
+					<SubscriptionListItem key={x.name} item={x} />
 				)}
 			</PaginationWrapper>
 		</div>

@@ -1,3 +1,4 @@
+/* Sub list */
 .subList {
 	display: flex;
 	flex-direction: column;
@@ -7,22 +8,35 @@
 	margin-bottom: 1rem;
 }
 
+/* Item */
+/* TODO: Align properly */
 .subList .subListItem {
 	display: flex;
 	flex-direction: row;
 	align-content: center;
-	justify-content: flex-start;
 
 	padding: 0.1rem;
 
 	border-bottom: 1px solid black;
 }
 
-.subListItem .remove {
-	box-sizing: border-box;
-	width: 15%;
+
+.subListItem .name {
+	align-self: flex-end;
+}
+.subListItem .padding {
+	width: 10%;
 }
 
-.subListItem .remove button {
-	margin: 0 auto;
+.subListItem button.remove {
+	background: red;
+	background-clip: content-box;
+
+	width: 10%;
+	box-sizing: border-box;
+	padding: 0.5rem;
+
+	border: 0;
+
+	color: white;
 }

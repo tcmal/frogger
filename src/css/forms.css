@@ -1,3 +1,4 @@
+/* Page Styling */
 .formPage {
 	width: 50%;
 	margin: 0 auto;
@@ -14,11 +15,7 @@
 	justify-items: start;
 }
 
-.formContainer form.disabled {
-	opacity: 0.5;
-	pointer-events: none;
-}
-
+/* Grid for labels */
 .formContainer form label {
 	grid-column: 1 / span 2;
 	justify-self: end;
@@ -39,6 +36,13 @@
 	justify-self: center;
 }
 
+/* Loading */
+.formContainer form.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+/* Error */
 .formContainer .error {
 	padding: 1rem;
 	width: 50%;

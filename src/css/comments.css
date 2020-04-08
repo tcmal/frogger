@@ -1,13 +1,10 @@
-.comment {
+/* Comment */
+.commentContainer .comment {
 	display: flex;
 	flex-direction: row;
 	justify-content: top;
 
 	margin-bottom: 2rem;
-}
-
-.commentContainer .children {
-	padding-left: 3rem;
 }
 
 .commentContainer .comment .listing span {
@@ -22,6 +19,12 @@
 	cursor: pointer;
 }
 
+/* Indent children */
+.commentContainer .children {
+	padding-left: 3rem;
+}
+
+/* New comment form */
 .newCommentForm {
 	padding: 1rem;
 }

@@ -1,27 +1,7 @@
-.homePage {
-	width: 90%;
-	margin: 0 auto;
-	padding-bottom: 5rem;
-	display: flex;
-}
-
-.homePage > .content {
-	flex-grow: 3;
-}
-
-.homePage > .sidebar {
-	flex-grow: 1;
-}
-
-
-.homePage .error {
-	color: red;
-}
-.homePage .loading {}
-
+/* Post list */
 .postList {}
-.postList .btn {}
 
+/* List items */
 .postList .post {
 	border-radius: 0.5rem 0.5rem;
 	padding: 1rem;
@@ -41,8 +21,4 @@
 	font-size: 0.9rem;
 	display: inline-block;
 	margin: 0 1rem;
-}
-
-.postList .next {
-	float: right;
 }

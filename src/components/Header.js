@@ -8,8 +8,7 @@ export default observer(function Header() {
 
 	return (
 		<header>
-			<Link to="/"><h1 className="title">frogger</h1></Link>
-
+			<h1 className="title"><Link to="/">frogger</Link></h1>
 			<nav className="right">
 				{auth.isLoggedIn ?
 					<span className="userLinks">

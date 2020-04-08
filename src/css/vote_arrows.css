@@ -8,6 +8,9 @@
 	padding: 0 2rem;
 }
 
+.voteArrows .number {
+	text-align: center;
+}
 
 .voteArrows .up, .voteArrows .down {
 	background: none;
@@ -16,16 +19,15 @@
 	box-sizing: border-box;
 }
 
+/* Ensure square */
 .voteArrows .up:after, .voteArrows .down:after {
 	padding-bottom: 100%;
 	display: block;
 	content: "";
 }
 
-.voteArrows .number {
-	text-align: center;
-}
 
+/* Colour voted ones */
 .voteArrows .up.active {
 	background: orange;
 	color: white;

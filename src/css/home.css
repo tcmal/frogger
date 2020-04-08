@@ -1,0 +1,21 @@
+/* Homepage styling */
+.homePage {
+	width: 90%;
+	margin: 0 auto;
+	padding-bottom: 5rem;
+	display: flex;
+}
+
+.homePage > .content {
+	flex-grow: 3;
+}
+
+.homePage > .sidebar {
+	flex-grow: 1;
+}
+
+
+.homePage .error {
+	color: red;
+}
+.homePage .loading {}

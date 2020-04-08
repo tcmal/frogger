@@ -1,3 +1,4 @@
+/* Page Header */
 header {
 	width: 100%;
 	box-sizing: border-box;
@@ -7,7 +8,8 @@ header {
 	padding-bottom: 1rem;
 
 	background: #8c9eff;
-	position: relative;
+
+	overflow: hidden;
 }
 
 
@@ -16,9 +18,8 @@ header .title {
 }
 
 header .right {
-	position: absolute;
-	right: 1rem;
-	bottom: 1rem;
+	float: right;
+	margin-right: 1rem;
 }
 
 header .userLinks a {
